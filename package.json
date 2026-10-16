@@ -11,7 +11,8 @@
     "start": "node server/server.js",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
-    "seed": "npm --prefix server run seed"
+    "seed": "npm --prefix server run seed",
+    "android:sync": "npm --prefix client run build && npm --prefix client run cap:sync"
   },
   "keywords": [
     "pwa",

@@ -1,0 +1,9 @@
+{
+  "appId": "com.expirybox.app",
+  "appName": "ExpiryBox",
+  "webDir": "dist",
+  "server": {
+    "cleartext": true,
+    "androidScheme": "https"
+  }
+}
