@@ -6,7 +6,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, _lang = 'en'
   const [tab, setTab] = useState('login'); // 'login' | 'register'
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
+    email: localStorage.getItem('expirybox_remembered_email') || '',
     phone: '',
     password: '',
   });
@@ -36,6 +36,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, _lang = 'en'
         }
         const res = await registerUser(formData);
         if (res.success) {
+          localStorage.setItem('expirybox_remembered_email', formData.email);
           onAuthSuccess(res.user);
           onClose();
         }
@@ -47,6 +48,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess, _lang = 'en'
         }
         const res = await loginUser({ email: formData.email, password: formData.password });
         if (res.success) {
+          localStorage.setItem('expirybox_remembered_email', formData.email);
           onAuthSuccess(res.user);
           onClose();
         }
