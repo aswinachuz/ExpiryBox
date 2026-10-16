@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   Search, 
   Plus, 
-  Shield, 
   Lock, 
   Unlock, 
   Download, 
@@ -17,10 +16,7 @@ import {
   X, 
   LogIn, 
   LogOut, 
-  User, 
   Phone, 
-  Mail, 
-  CheckCircle2, 
   ChevronRight,
   ChevronDown
 } from 'lucide-react';
@@ -42,7 +38,7 @@ export default function Navbar({
   onOpenAuth,
   onLogout,
   onInstallApp,
-  isInstallable,
+  _isInstallable,
 }) {
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [showToolsMenu, setShowToolsMenu] = useState(false);

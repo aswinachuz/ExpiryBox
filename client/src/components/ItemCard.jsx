@@ -14,7 +14,7 @@ export default function ItemCard({
   onRenew,
   onResolve,
   onSnooze,
-  lang = 'en',
+  _lang = 'en',
 }) {
   const days = getDaysRemaining(item.expiryDate);
   const statusMeta = getStatusMeta(days, item.isResolved);

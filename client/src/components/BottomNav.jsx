@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Clock, Plus, Calendar, Briefcase, Users } from 'lucide-react';
+import { Home, Clock, Plus, Calendar, Users } from 'lucide-react';
 
 export default function BottomNav({ currentView, setCurrentView, onOpenAdd, onOpenFamily }) {
   return (

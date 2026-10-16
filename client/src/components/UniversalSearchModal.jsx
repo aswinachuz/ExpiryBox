@@ -1,34 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, ChevronRight, FileText, Calendar, Tag } from 'lucide-react';
+import { Search, X, ChevronRight } from 'lucide-react';
 import { searchItems } from '../api';
-import { formatDate, getStatusMeta, getDaysRemaining, CATEGORY_META } from '../utils/formatters';
+import { getStatusMeta, getDaysRemaining, CATEGORY_META } from '../utils/formatters';
 
 export default function UniversalSearchModal({ isOpen, onClose, onSelectItem }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
-    } else {
-      setQuery('');
-      setResults([]);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (query.trim()) {
-        performSearch(query.trim());
-      } else {
-        setResults([]);
-      }
-    }, 250);
-
-    return () => clearTimeout(timer);
-  }, [query]);
 
   const performSearch = async (q) => {
     setLoading(true);
@@ -43,6 +22,24 @@ export default function UniversalSearchModal({ isOpen, onClose, onSelectItem }) 
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 50);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (query.trim()) {
+        performSearch(query.trim());
+      } else {
+        setResults([]);
+      }
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [query]);
 
   if (!isOpen) return null;
 

@@ -257,6 +257,14 @@ ItemSchema.virtual('status').get(function () {
   return 'good';
 });
 
+// High performance database indexes for production scale
+ItemSchema.index({ isArchived: 1, expiryDate: 1 });
+ItemSchema.index({ person: 1, isArchived: 1 });
+ItemSchema.index({ asset: 1, isArchived: 1 });
+ItemSchema.index({ category: 1, isArchived: 1 });
+ItemSchema.index({ priority: 1, isArchived: 1 });
+ItemSchema.index({ title: 'text', provider: 'text', documentNumber: 'text', notes: 'text' });
+
 ItemSchema.pre('save', function (next) {
   this.updatedAt = new Date();
   next();

@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { getTimeline } from '../api';
 import { formatDate, getStatusMeta, getDaysRemaining, CATEGORY_META, formatCurrency } from '../utils/formatters';
-import { Clock, AlertCircle, RotateCw, CheckCircle2, ChevronRight, Calendar } from 'lucide-react';
+import { RotateCw, CheckCircle2 } from 'lucide-react';
 
 export default function TimelineView({ onSelectItem, onRenew, onResolve }) {
   const [timeline, setTimeline] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadTimeline();
-  }, []);
 
   const loadTimeline = async () => {
     setLoading(true);
@@ -24,6 +20,10 @@ export default function TimelineView({ onSelectItem, onRenew, onResolve }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadTimeline();
+  }, []);
 
   const sections = [
     {

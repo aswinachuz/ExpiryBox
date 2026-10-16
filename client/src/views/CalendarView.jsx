@@ -1,46 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { getCalendar } from '../api';
-import { formatDate, getStatusMeta, getDaysRemaining, CATEGORY_META, formatCurrency } from '../utils/formatters';
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { getStatusMeta, getDaysRemaining, CATEGORY_META, formatCurrency } from '../utils/formatters';
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react';
 
-export default function CalendarView({ onSelectItem, onRenew }) {
-  const [currentDate, setCurrentDate] = useState(new Date());
+export default function CalendarView({ onSelectItem, _onRenew }) {
+  const [currentDate, setCurrentDate] = useState(() => new Date());
   const [calendarData, setCalendarData] = useState([]);
   const [selectedDayEvents, setSelectedDayEvents] = useState([]);
-  const [selectedDayNumber, setSelectedDayNumber] = useState(new Date().getDate());
-  const [loading, setLoading] = useState(false);
+  const [selectedDayNumber, setSelectedDayNumber] = useState(() => new Date().getDate());
 
   const month = currentDate.getMonth() + 1; // 1-12
   const year = currentDate.getFullYear();
+
+  const updateSelectedDay = (dayNum, itemsList) => {
+    setSelectedDayNumber(dayNum);
+    const dayEvents = (itemsList || calendarData).filter((item) => {
+      const d = new Date(item.expiryDate);
+      return d.getDate() === dayNum && (d.getMonth() + 1) === month && d.getFullYear() === year;
+    });
+    setSelectedDayEvents(dayEvents);
+  };
+
+  const fetchEvents = async (m, y) => {
+    try {
+      const res = await getCalendar(m, y);
+      if (res.success) {
+        setCalendarData(res.items);
+        updateSelectedDay(selectedDayNumber, res.items);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
     fetchEvents(month, year);
   }, [month, year]);
 
-  const fetchEvents = async (m, y) => {
-    setLoading(true);
-    try {
-      const res = await getCalendar(m, y);
-      if (res.success) {
-        setCalendarData(res.items);
-        // Default select today if in current month
-        updateSelectedDay(selectedDayNumber, res.items);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateSelectedDay = (dayNum, items) => {
-    setSelectedDayNumber(dayNum);
-    const dayItems = items.filter((item) => {
-      const d = new Date(item.expiryDate);
-      return d.getDate() === dayNum && d.getMonth() + 1 === month && d.getFullYear() === year;
-    });
-    setSelectedDayEvents(dayItems);
-  };
 
   const handlePrevMonth = () => {
     setCurrentDate(new Date(year, month - 2, 1));

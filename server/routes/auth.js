@@ -5,7 +5,12 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Person = require('../models/Person');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'expirybox_super_secret_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET || (process.env.NODE_ENV === 'production'
+  ? (() => {
+      console.warn('⚠️ WARNING: JWT_SECRET environment variable is not explicitly set. Using fallback secret.');
+      return 'expirybox_production_jwt_fallback_secret_key_2026';
+    })()
+  : 'expirybox_dev_jwt_secret_key_2026');
 
 const generateToken = (user) => {
   return jwt.sign(

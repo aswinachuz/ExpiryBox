@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, AlertTriangle, RotateCw, BellOff, CheckCircle2, ChevronRight } from 'lucide-react';
+import { X, RotateCw, BellOff } from 'lucide-react';
 import { formatDate, getStatusMeta } from '../utils/formatters';
 
 export default function MissedRemindersModal({
@@ -51,7 +51,10 @@ export default function MissedRemindersModal({
                 key={item._id}
                 className="p-3.5 rounded-2xl bg-[#FAF9F6] border border-[#E7E5E4] flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-amber-300 transition-all"
               >
-                <div>
+                <div 
+                  className="cursor-pointer flex-1"
+                  onClick={() => onSelectItem && onSelectItem(item)}
+                >
                   <div className="flex items-center gap-2">
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold border ${statusMeta.badgeClass}`}>
                       {statusMeta.pillText}

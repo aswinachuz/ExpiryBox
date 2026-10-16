@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { getAssets, getItems } from '../api';
+import { getAssets } from '../api';
 import { formatDate, getStatusMeta, getDaysRemaining, CATEGORY_META, formatCurrency } from '../utils/formatters';
-import { Briefcase, Car, Laptop, Home, Landmark, Plus, ChevronRight, FileText, Calendar } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 export default function AssetHubView({ onSelectItem, onOpenAdd, lang = 'en' }) {
   const [assets, setAssets] = useState([]);
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadAssets();
-  }, []);
 
   const loadAssets = async () => {
     setLoading(true);
@@ -28,6 +24,10 @@ export default function AssetHubView({ onSelectItem, onOpenAdd, lang = 'en' }) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadAssets();
+  }, []);
 
   const getAssetIcon = (type) => {
     switch (type) {

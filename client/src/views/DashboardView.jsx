@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import ItemCard from '../components/ItemCard';
 import { CATEGORY_META } from '../utils/formatters';
-import { AlertTriangle, Clock, CheckCircle2, ShieldAlert, Sparkles, Filter, BellOff, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { getTranslation } from '../utils/i18n';
 
 export default function DashboardView({
@@ -21,19 +21,21 @@ export default function DashboardView({
   const [statusFilter, setStatusFilter] = useState('all');
   const [priorityFilter, setPriorityFilter] = useState('all');
 
-  // Filter items
-  const filteredItems = items.filter((item) => {
-    if (activeCategory !== 'all' && item.category !== activeCategory) {
-      return false;
-    }
-    if (statusFilter !== 'all' && item.status !== statusFilter) {
-      return false;
-    }
-    if (priorityFilter !== 'all' && item.priority !== priorityFilter) {
-      return false;
-    }
-    return true;
-  });
+  // Memoized filtered items
+  const filteredItems = useMemo(() => {
+    return items.filter((item) => {
+      if (activeCategory !== 'all' && item.category !== activeCategory) {
+        return false;
+      }
+      if (statusFilter !== 'all' && item.status !== statusFilter) {
+        return false;
+      }
+      if (priorityFilter !== 'all' && item.priority !== priorityFilter) {
+        return false;
+      }
+      return true;
+    });
+  }, [items, activeCategory, statusFilter, priorityFilter]);
 
   return (
     <div className="space-y-8">

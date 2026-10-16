@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Upload, Plus, Calendar, Bell, Shield, AlertCircle, AlertTriangle, Lock, UserCheck } from 'lucide-react';
+import { X, Upload, Bell, AlertCircle } from 'lucide-react';
 import { CATEGORY_META } from '../utils/formatters';
 import { createItem, getPersons, getAssets } from '../api';
 
@@ -44,12 +44,6 @@ export default function AddItemModal({ isOpen, onClose, onItemCreated, lang = 'e
 
   const [selectedFiles, setSelectedFiles] = useState([]);
 
-  useEffect(() => {
-    if (isOpen) {
-      loadContext();
-    }
-  }, [isOpen]);
-
   const loadContext = async () => {
     try {
       const [personsData, assetsData] = await Promise.all([getPersons(), getAssets()]);
@@ -59,6 +53,12 @@ export default function AddItemModal({ isOpen, onClose, onItemCreated, lang = 'e
       console.error('Failed to load persons/assets', err);
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      loadContext();
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

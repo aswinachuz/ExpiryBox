@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import BottomNav from './components/BottomNav';
 import DashboardView from './views/DashboardView';
 import TimelineView from './views/TimelineView';
 import CalendarView from './views/CalendarView';
 import AssetHubView from './views/AssetHubView';
-import AddItemModal from './components/AddItemModal';
-import ItemDetailModal from './components/ItemDetailModal';
-import RenewModal from './components/RenewModal';
-import SnoozeModal from './components/SnoozeModal';
-import MissedRemindersModal from './components/MissedRemindersModal';
-import UniversalSearchModal from './components/UniversalSearchModal';
-import PinLockModal from './components/PinLockModal';
-import FamilyVaultModal from './components/FamilyVaultModal';
-import BackupModal from './components/BackupModal';
-import ReportsModal from './components/ReportsModal';
-import AuthModal from './components/AuthModal';
 import { getStats, getItems, deleteItem, resolveItem, getMissedReminders, getMe, logoutUser } from './api';
+
+// Code-split modals for optimal initial page-load performance
+const AddItemModal = lazy(() => import('./components/AddItemModal'));
+const ItemDetailModal = lazy(() => import('./components/ItemDetailModal'));
+const RenewModal = lazy(() => import('./components/RenewModal'));
+const SnoozeModal = lazy(() => import('./components/SnoozeModal'));
+const MissedRemindersModal = lazy(() => import('./components/MissedRemindersModal'));
+const UniversalSearchModal = lazy(() => import('./components/UniversalSearchModal'));
+const PinLockModal = lazy(() => import('./components/PinLockModal'));
+const FamilyVaultModal = lazy(() => import('./components/FamilyVaultModal'));
+const BackupModal = lazy(() => import('./components/BackupModal'));
+const ReportsModal = lazy(() => import('./components/ReportsModal'));
+const AuthModal = lazy(() => import('./components/AuthModal'));
 
 export default function App() {
   const [currentView, setCurrentView] = useState('dashboard');
@@ -33,7 +35,7 @@ export default function App() {
     try {
       const saved = localStorage.getItem('expirybox_user');
       return saved ? JSON.parse(saved) : null;
-    } catch (e) {
+    } catch {
       return null;
     }
   });
@@ -288,93 +290,115 @@ export default function App() {
         onOpenFamily={() => setIsFamilyOpen(true)}
       />
 
-      {/* Modals */}
-      <AddItemModal
-        isOpen={isAddOpen}
-        onClose={() => setIsAddOpen(false)}
-        onItemCreated={() => refreshData()}
-        lang={lang}
-      />
+      {/* Modals wrapped in Suspense for on-demand lazy bundle loading */}
+      <Suspense fallback={null}>
+        {isAddOpen && (
+          <AddItemModal
+            isOpen={isAddOpen}
+            onClose={() => setIsAddOpen(false)}
+            onItemCreated={() => refreshData()}
+            lang={lang}
+          />
+        )}
 
-      <ItemDetailModal
-        item={selectedItem}
-        isOpen={!!selectedItem}
-        onClose={() => setSelectedItem(null)}
-        onRenew={(item) => {
-          setSelectedItem(null);
-          setRenewingItem(item);
-        }}
-        onSnooze={(item) => {
-          setSelectedItem(null);
-          setSnoozingItem(item);
-        }}
-        onResolve={handleResolve}
-        onDelete={handleDelete}
-        lang={lang}
-      />
+        {selectedItem && (
+          <ItemDetailModal
+            item={selectedItem}
+            isOpen={!!selectedItem}
+            onClose={() => setSelectedItem(null)}
+            onRenew={(item) => {
+              setSelectedItem(null);
+              setRenewingItem(item);
+            }}
+            onSnooze={(item) => {
+              setSelectedItem(null);
+              setSnoozingItem(item);
+            }}
+            onResolve={handleResolve}
+            onDelete={handleDelete}
+            lang={lang}
+          />
+        )}
 
-      <RenewModal
-        item={renewingItem}
-        isOpen={!!renewingItem}
-        onClose={() => setRenewingItem(null)}
-        onRenewed={() => refreshData()}
-      />
+        {renewingItem && (
+          <RenewModal
+            item={renewingItem}
+            isOpen={!!renewingItem}
+            onClose={() => setRenewingItem(null)}
+            onRenewed={() => refreshData()}
+          />
+        )}
 
-      <SnoozeModal
-        item={snoozingItem}
-        isOpen={!!snoozingItem}
-        onClose={() => setSnoozingItem(null)}
-        onSnoozed={() => refreshData()}
-        lang={lang}
-      />
+        {snoozingItem && (
+          <SnoozeModal
+            item={snoozingItem}
+            isOpen={!!snoozingItem}
+            onClose={() => setSnoozingItem(null)}
+            onSnoozed={() => refreshData()}
+            lang={lang}
+          />
+        )}
 
-      <MissedRemindersModal
-        missedItems={missedItems}
-        isOpen={isMissedRemindersOpen}
-        onClose={() => setIsMissedRemindersOpen(false)}
-        onSelectItem={(item) => {
-          setSelectedItem(item);
-          setIsMissedRemindersOpen(false);
-        }}
-        onRenew={(item) => setRenewingItem(item)}
-        onSnooze={(item) => setSnoozingItem(item)}
-        lang={lang}
-      />
+        {isMissedRemindersOpen && (
+          <MissedRemindersModal
+            missedItems={missedItems}
+            isOpen={isMissedRemindersOpen}
+            onClose={() => setIsMissedRemindersOpen(false)}
+            onSelectItem={(item) => {
+              setSelectedItem(item);
+              setIsMissedRemindersOpen(false);
+            }}
+            onRenew={(item) => setRenewingItem(item)}
+            onSnooze={(item) => setSnoozingItem(item)}
+            lang={lang}
+          />
+        )}
 
-      <UniversalSearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-        onSelectItem={(item) => setSelectedItem(item)}
-      />
+        {isSearchOpen && (
+          <UniversalSearchModal
+            isOpen={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+            onSelectItem={(item) => setSelectedItem(item)}
+          />
+        )}
 
-      <FamilyVaultModal
-        isOpen={isFamilyOpen}
-        onClose={() => setIsFamilyOpen(false)}
-        onSelectItem={(item) => setSelectedItem(item)}
-        onRenew={(item) => setRenewingItem(item)}
-        onPersonUpdated={() => refreshData()}
-        lang={lang}
-      />
+        {isFamilyOpen && (
+          <FamilyVaultModal
+            isOpen={isFamilyOpen}
+            onClose={() => setIsFamilyOpen(false)}
+            onSelectItem={(item) => setSelectedItem(item)}
+            onRenew={(item) => setRenewingItem(item)}
+            onPersonUpdated={() => refreshData()}
+            lang={lang}
+          />
+        )}
 
-      <ReportsModal
-        items={items}
-        isOpen={isReportsOpen}
-        onClose={() => setIsReportsOpen(false)}
-        lang={lang}
-      />
+        {isReportsOpen && (
+          <ReportsModal
+            items={items}
+            isOpen={isReportsOpen}
+            onClose={() => setIsReportsOpen(false)}
+            lang={lang}
+          />
+        )}
 
-      <BackupModal
-        isOpen={isBackupOpen}
-        onClose={() => setIsBackupOpen(false)}
-        onDataRestored={() => refreshData()}
-      />
+        {isBackupOpen && (
+          <BackupModal
+            isOpen={isBackupOpen}
+            onClose={() => setIsBackupOpen(false)}
+            onDataRestored={() => refreshData()}
+          />
+        )}
 
-      <AuthModal
-        isOpen={isAuthOpen}
-        onClose={() => setIsAuthOpen(false)}
-        onAuthSuccess={handleAuthSuccess}
-        lang={lang}
-      />
+        {isAuthOpen && (
+          <AuthModal
+            isOpen={isAuthOpen}
+            onClose={() => setIsAuthOpen(false)}
+            onAuthSuccess={handleAuthSuccess}
+            lang={lang}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }

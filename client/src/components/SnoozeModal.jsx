@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Clock, Calendar, Check, BellOff } from 'lucide-react';
+import { X, Calendar, Check, BellOff } from 'lucide-react';
 import { snoozeItem } from '../api';
 
 export default function SnoozeModal({ item, isOpen, onClose, onSnoozed, lang = 'en' }) {

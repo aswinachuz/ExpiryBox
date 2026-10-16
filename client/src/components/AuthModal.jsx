@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Phone, CheckCircle2, AlertCircle, ArrowRight } from 'lucide-react';
+import { X, Mail, Lock, User, Phone, AlertCircle, ArrowRight } from 'lucide-react';
 import { registerUser, loginUser, loginWithGoogle } from '../api';
 
-export default function AuthModal({ isOpen, onClose, onAuthSuccess, lang = 'en' }) {
+export default function AuthModal({ isOpen, onClose, onAuthSuccess, _lang = 'en' }) {
   const [tab, setTab] = useState('login'); // 'login' | 'register'
   const [formData, setFormData] = useState({
     name: '',

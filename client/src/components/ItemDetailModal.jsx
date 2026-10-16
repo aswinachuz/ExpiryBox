@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   RotateCw, 
@@ -6,18 +6,13 @@ import {
   Trash2, 
   Paperclip, 
   ExternalLink, 
-  Calendar, 
-  AlertCircle, 
-  Bell, 
   BellOff, 
-  Tag, 
   User, 
   Briefcase, 
   CheckSquare, 
   History, 
   Activity, 
   RotateCcw, 
-  ShieldCheck, 
   Lock 
 } from 'lucide-react';
 import { 
@@ -37,11 +32,16 @@ export default function ItemDetailModal({
   onResolve,
   onDelete,
   onSnooze,
-  lang = 'en',
+  _lang = 'en',
 }) {
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'checklist' | 'history' | 'activity'
   const [checklist, setChecklist] = useState(item?.checklist || []);
-  const [rotationAngle, setRotationAngle] = useState(0);
+
+  useEffect(() => {
+    if (item?.checklist) {
+      setChecklist(item.checklist);
+    }
+  }, [item]);
 
   if (!isOpen || !item) return null;
 
@@ -126,9 +126,9 @@ export default function ItemDetailModal({
           >
             <CheckSquare className="w-3.5 h-3.5" />
             <span>Renewal Checklist</span>
-            {item.checklist && item.checklist.length > 0 && (
+            {checklist && checklist.length > 0 && (
               <span className="text-[10px] bg-amber-50 text-amber-800 border border-amber-200 px-1.5 rounded-full">
-                {item.checklist.filter((c) => c.isCompleted).length}/{item.checklist.length}
+                {checklist.filter((c) => c.isCompleted).length}/{checklist.length}
               </span>
             )}
           </button>
@@ -312,7 +312,7 @@ export default function ItemDetailModal({
             </div>
 
             <div className="space-y-2.5">
-              {(item.checklist || []).map((step, idx) => (
+              {(checklist || []).map((step, idx) => (
                 <div
                   key={idx}
                   onClick={() => handleToggleTask(idx, step.isCompleted)}

@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
-import { X, RotateCw, Calendar, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, RotateCw, Check } from 'lucide-react';
 import { formatDate } from '../utils/formatters';
 import { renewItem } from '../api';
 
-export default function RenewModal({ item, isOpen, onClose, onRenewed }) {
-  if (!isOpen || !item) return null;
-
-  // Calculate default +1 year from existing expiry or today
-  const calculateDefaultNewDate = () => {
-    const base = new Date(item.expiryDate) > new Date() ? new Date(item.expiryDate) : new Date();
+const calculateDefaultNewDate = (item) => {
+  if (!item?.expiryDate) {
+    const base = new Date();
     base.setFullYear(base.getFullYear() + 1);
     return base.toISOString().split('T')[0];
-  };
+  }
+  const base = new Date(item.expiryDate) > new Date() ? new Date(item.expiryDate) : new Date();
+  base.setFullYear(base.getFullYear() + 1);
+  return base.toISOString().split('T')[0];
+};
 
-  const [newDate, setNewDate] = useState(calculateDefaultNewDate());
+export default function RenewModal({ item, isOpen, onClose, onRenewed }) {
+  const [newDate, setNewDate] = useState(() => calculateDefaultNewDate(item));
   const [renewalNotes, setRenewalNotes] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (item) {
+      setNewDate(calculateDefaultNewDate(item));
+      setRenewalNotes('');
+    }
+  }, [item]);
+
+  if (!isOpen || !item) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

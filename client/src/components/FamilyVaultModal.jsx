@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   X, 
-  UserPlus, 
-  Users, 
-  ShieldCheck, 
-  ChevronRight, 
   RotateCw, 
-  Calendar, 
-  Paperclip, 
-  CheckCircle2, 
-  AlertTriangle,
   Pencil,
   Save,
   Check,
@@ -21,7 +13,6 @@ import { formatDate, getStatusMeta, getDaysRemaining, CATEGORY_META, formatCurre
 export default function FamilyVaultModal({ isOpen, onClose, onSelectItem, onRenew, onPersonUpdated, lang = 'en' }) {
   const [persons, setPersons] = useState([]);
   const [selectedPerson, setSelectedPerson] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({ name: '', relation: '', avatar: '', phone: '' });
@@ -34,14 +25,7 @@ export default function FamilyVaultModal({ isOpen, onClose, onSelectItem, onRene
     phone: '',
   });
 
-  useEffect(() => {
-    if (isOpen) {
-      loadPersons();
-    }
-  }, [isOpen]);
-
   const loadPersons = async () => {
-    setLoading(true);
     try {
       const res = await getPersons();
       if (res.success) {
@@ -56,10 +40,14 @@ export default function FamilyVaultModal({ isOpen, onClose, onSelectItem, onRene
       }
     } catch (err) {
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      loadPersons();
+    }
+  }, [isOpen]);
 
   const handleStartEdit = () => {
     if (!selectedPerson) return;

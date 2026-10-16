@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Download, Printer, FileText, CheckCircle2, Calendar } from 'lucide-react';
+import { X, Download, Printer, FileText } from 'lucide-react';
 import { getCsvExportUrl } from '../api';
 import { formatDate, formatCurrency, CATEGORY_META } from '../utils/formatters';
 

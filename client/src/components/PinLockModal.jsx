@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Fingerprint, ShieldCheck, KeyRound } from 'lucide-react';
+import { Lock, Fingerprint } from 'lucide-react';
 
 export default function PinLockModal({ isLocked, onUnlock }) {
   const [pin, setPin] = useState('');
