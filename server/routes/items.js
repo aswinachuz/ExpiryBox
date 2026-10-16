@@ -40,6 +40,22 @@ const DEFAULT_CHECKLISTS = {
   ],
 };
 
+const { reconcileReminders } = require('../services/notificationService');
+
+// TRIGGER: Reconcile and dispatch automated deadline reminders
+router.post('/reconcile-reminders', async (req, res) => {
+  try {
+    const result = await reconcileReminders();
+    res.json({
+      success: true,
+      message: 'Deadline reconciliation completed successfully',
+      result,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 // 1. STATS: Overview metrics for Dashboard
 router.get('/stats', async (req, res) => {
   try {

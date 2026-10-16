@@ -6,6 +6,7 @@ import TimelineView from './views/TimelineView';
 import CalendarView from './views/CalendarView';
 import AssetHubView from './views/AssetHubView';
 import { getStats, getItems, deleteItem, resolveItem, getMissedReminders, getMe, logoutUser } from './api';
+import { playReminderChime, playSuccessChime } from './utils/sound';
 
 // Code-split modals for optimal initial page-load performance
 const AddItemModal = lazy(() => import('./components/AddItemModal'));
@@ -109,6 +110,7 @@ export default function App() {
         const hasOverdue = missedData.missed.some((m) => m.isOverdue);
         if (hasOverdue && !sessionStorage.getItem('expirybox_missed_prompted')) {
           setIsMissedRemindersOpen(true);
+          playReminderChime();
           sessionStorage.setItem('expirybox_missed_prompted', 'true');
         }
       }
@@ -194,6 +196,7 @@ export default function App() {
     try {
       const res = await resolveItem(item._id);
       if (res.success) {
+        playSuccessChime();
         refreshData();
       }
     } catch (err) {
@@ -325,7 +328,10 @@ export default function App() {
             item={renewingItem}
             isOpen={!!renewingItem}
             onClose={() => setRenewingItem(null)}
-            onRenewed={() => refreshData()}
+            onRenewed={() => {
+              playSuccessChime();
+              refreshData();
+            }}
           />
         )}
 

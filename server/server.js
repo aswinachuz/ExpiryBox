@@ -63,11 +63,14 @@ app.use((err, req, res, next) => {
   });
 });
 
+const { initNotificationCron } = require('./services/notificationService');
+
 // Connect to MongoDB and start server
 mongoose
   .connect(MONGO_URI)
   .then(() => {
     console.log(' Connected to MongoDB at:', MONGO_URI);
+    initNotificationCron();
     app.listen(PORT, () => {
       console.log(`🚀 ExpiryBox Server listening on http://localhost:${PORT}`);
     });
