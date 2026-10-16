@@ -12,12 +12,15 @@ const authRoutes = require('./routes/auth');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/expirybox';
+const MONGO_URI = process.env.MONGO_URI || (process.env.VERCEL ? null : 'mongodb://127.0.0.1:27017/expirybox');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Silence favicon requests to prevent 500s
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // Serve uploaded documents & photos (Safe for both Serverless /tmp and persistent disk)
 const uploadsDir = process.env.VERCEL
@@ -39,8 +42,11 @@ const connectDB = async () => {
   if (isConnected && mongoose.connection.readyState === 1) {
     return mongoose.connection;
   }
-  if (!process.env.MONGO_URI && process.env.VERCEL) {
-    console.warn('⚠️ MONGO_URI environment variable is missing on Vercel dashboard!');
+  if (!MONGO_URI) {
+    if (process.env.VERCEL) {
+      console.warn('⚠️ MONGO_URI environment variable is missing on Vercel dashboard!');
+    }
+    return null;
   }
   try {
     const conn = await mongoose.connect(MONGO_URI, {
@@ -51,14 +57,13 @@ const connectDB = async () => {
     return conn;
   } catch (err) {
     console.error('❌ MongoDB Connection Error:', err.message);
-    throw err;
+    return null;
   }
 };
 
 // Ensure DB connected on API requests in serverless environments
 app.use(async (req, res, next) => {
-  // Ensure DB connected on API requests in serverless environments
-  if (mongoose.connection.readyState !== 1) {
+  if (mongoose.connection.readyState !== 1 && MONGO_URI) {
     try {
       await connectDB();
     } catch (err) {
@@ -94,14 +99,14 @@ app.use('/persons', personRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/assets', assetRoutes);
 
-// Serve client build if available (Unified production hosting like Render/VPS/Docker)
+// Serve client build if available (Unified production hosting like Render/VPS/Docker/Vercel fallback)
 const clientDistPath = path.join(__dirname, '../client/dist');
-if (fs.existsSync(clientDistPath) && !process.env.VERCEL) {
+if (fs.existsSync(clientDistPath)) {
   console.log(`📦 Serving static client build from: ${clientDistPath}`);
   app.use(express.static(clientDistPath));
 
   app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path.startsWith('/auth') || req.path.startsWith('/items')) {
       return next();
     }
     res.sendFile(path.join(clientDistPath, 'index.html'));
