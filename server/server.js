@@ -103,6 +103,7 @@ const healthHandler = (req, res) => {
 };
 app.get('/api/health', healthHandler);
 app.get('/health', healthHandler);
+app.get('/api', healthHandler);
 
 // Mount Routes (supporting both /api/xxx and /xxx for Vercel rewrites)
 app.use('/api/auth', authRoutes);
