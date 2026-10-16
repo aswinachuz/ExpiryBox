@@ -95,7 +95,7 @@ const healthHandler = (req, res) => {
   res.json({
     status: 'online',
     app: 'ExpiryBox API',
-    version: '1.0.1',
+    version: '1.0.2-patch',
     timestamp: new Date().toISOString(),
     mongoConnected: mongoose.connection.readyState === 1,
   });
