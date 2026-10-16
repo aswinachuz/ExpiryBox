@@ -13,7 +13,7 @@ export const getAttachmentUrl = (filePath) => {
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
+  timeout: 15000,
 });
 
 // Attach Bearer token to all requests if present

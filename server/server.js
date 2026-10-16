@@ -61,15 +61,30 @@ const connectDB = async () => {
   }
 };
 
-// Ensure DB connected on API requests in serverless environments
+mongoose.set('bufferCommands', false);
+
+// Ensure DB connected on API requests or return clear immediate status
 app.use(async (req, res, next) => {
+  if (req.path === '/api/health' || req.path === '/health' || req.path === '/favicon.ico') {
+    return next();
+  }
+
   if (mongoose.connection.readyState !== 1 && MONGO_URI) {
     try {
       await connectDB();
-    } catch (err) {
-      // Continue so health check or fallback error responses can render
-    }
+    } catch (err) {}
   }
+
+  // If request is targeting an API database route and Mongo is still not connected
+  const isApiRoute = req.path.startsWith('/api') || req.path.startsWith('/auth') || req.path.startsWith('/items') || req.path.startsWith('/persons') || req.path.startsWith('/assets');
+  if (isApiRoute && mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      success: false,
+      message: 'MongoDB database is not connected. Please add your MONGO_URI in Vercel Project Settings → Environment Variables.',
+      mongoConnected: false,
+    });
+  }
+
   next();
 });
 
