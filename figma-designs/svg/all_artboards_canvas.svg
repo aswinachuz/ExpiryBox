@@ -1,0 +1,32 @@
+<svg width="1760" height="960" viewBox="0 0 1760 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Warm Studio Canvas Floor -->
+  <rect width="1760" height="960" fill="#F1F3F5"/>
+  
+  <!-- Canvas Header -->
+  <text x="40" y="44" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="800">ExpiryBox — Human-Crafted Light Mode Canvas</text>
+  <text x="40" y="66" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="600">Soft paper whites, calm tactile surfaces, and non-neon status tones (Mobile UI Kit • 393 × 852 px)</text>
+
+  <!-- Frame 1: Dashboard -->
+  <g transform="translate(40, 80)">
+    <text x="0" y="-12" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">#01 Dashboard (Home)</text>
+    <image href="01_dashboard.svg" width="393" height="852"/>
+  </g>
+
+  <!-- Frame 2: Life Timeline -->
+  <g transform="translate(470, 80)">
+    <text x="0" y="-12" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">#02 Life Timeline (Hero Feature)</text>
+    <image href="02_life_timeline.svg" width="393" height="852"/>
+  </g>
+
+  <!-- Frame 3: Document Scanner -->
+  <g transform="translate(900, 80)">
+    <text x="0" y="-12" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">#03 Document Scanner (OCR)</text>
+    <image href="03_smart_ocr_scanner.svg" width="393" height="852"/>
+  </g>
+
+  <!-- Frame 4: Vehicle Garage -->
+  <g transform="translate(1330, 80)">
+    <text x="0" y="-12" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">#04 Vehicle Garage (KL-07-CB-9921)</text>
+    <image href="04_vehicle_garage.svg" width="393" height="852"/>
+  </g>
+</svg>

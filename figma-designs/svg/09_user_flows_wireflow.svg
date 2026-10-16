@@ -1,0 +1,292 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Canvas Floor (Warm Light Studio) -->
+  <rect width="1920" height="1080" fill="#F8F9FA"/>
+  
+  <!-- Flow Title & Header -->
+  <g id="Canvas_Header">
+    <text x="60" y="60" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="28" font-weight="800">ExpiryBox — Complete UX Architecture &amp; User Flows</text>
+    <text x="60" y="86" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="500">End-to-End Screen Journeys, Smart Reminder Escalations, and 4-Tier Entity Mapping</text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- FLOW 1: SMART CAPTURE & AUTO-EXTRACTION FLOW             -->
+  <!-- ======================================================== -->
+  <g id="Flow_1_Capture">
+    <!-- Flow Boundary Box -->
+    <rect x="60" y="120" width="880" height="420" rx="24" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <rect x="80" y="140" width="160" height="26" rx="13" fill="#EFF6FF" stroke="#DBEAFE"/>
+    <text x="160" y="157" text-anchor="middle" fill="#1E40AF" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">FLOW 01: SMART CAPTURE</text>
+
+    <!-- Step 1: User Initiates -->
+    <rect x="80" y="190" width="160" height="80" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="96" y="218" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">1. Tap Scan (+)</text>
+    <text x="96" y="236" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Floating center button on</text>
+    <text x="96" y="250" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Bottom Navigation bar</text>
+
+    <!-- Arrow 1 -> 2 -->
+    <path d="M240 230h40" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+    <polygon points="280,230 272,226 272,234" fill="#2563EB"/>
+    <text x="260" y="222" text-anchor="middle" fill="#2563EB" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">TAP</text>
+
+    <!-- Step 2: Camera HUD -->
+    <rect x="290" y="190" width="170" height="80" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="306" y="218" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">2. Camera Viewfinder</text>
+    <text x="306" y="236" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Live edge-detection bounding</text>
+    <text x="306" y="250" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">box sweeps over policy</text>
+
+    <!-- Arrow 2 -> 3 -->
+    <path d="M460 230h40" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+    <polygon points="500,230 492,226 492,234" fill="#2563EB"/>
+    <text x="480" y="222" text-anchor="middle" fill="#2563EB" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">AI MATCH</text>
+
+    <!-- Step 3: OCR Detection -->
+    <rect x="510" y="190" width="180" height="80" rx="16" fill="#EFF6FF" stroke="#BFDBFE"/>
+    <text x="526" y="218" fill="#1E40AF" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">3. OCR Parse (99.4%)</text>
+    <text x="526" y="236" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Identifies: Expiry (15/12/26),</text>
+    <text x="526" y="250" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Policy #, Vehicle # KL-07...</text>
+
+    <!-- Arrow 3 -> 4 -->
+    <path d="M690 230h40" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+    <polygon points="730,230 722,226 722,234" fill="#2563EB"/>
+    <text x="710" y="222" text-anchor="middle" fill="#2563EB" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">PARSE</text>
+
+    <!-- Step 4: Bottom Sheet Review -->
+    <rect x="740" y="190" width="170" height="80" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="756" y="218" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">4. Privacy Shield</text>
+    <text x="756" y="236" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">User selects: Store only expiry</text>
+    <text x="756" y="250" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Discard unneeded PII</text>
+
+    <!-- Branch down to Linking -->
+    <path d="M825 270v50" stroke="#10B981" stroke-width="2"/>
+    <polygon points="825,320 821,312 829,312" fill="#10B981"/>
+    <text x="835" y="300" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">CONFIRM</text>
+
+    <!-- Step 5: Link to Asset & Schedule Reminders -->
+    <rect x="490" y="330" width="420" height="170" rx="18" fill="#ECFDF5" stroke="#A7F3D0"/>
+    <text x="510" y="360" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="800">5. Automated Asset Linking &amp; Reminder Cascade</text>
+    
+    <g transform="translate(510, 375)">
+      <rect x="0" y="0" width="185" height="48" rx="10" fill="#FFFFFF" stroke="#D1FAE5"/>
+      <text x="12" y="20" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700">Linked to Asset:</text>
+      <text x="12" y="36" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="800">Honda Activa (Garage)</text>
+
+      <rect x="195" y="0" width="185" height="48" rx="10" fill="#FFFFFF" stroke="#D1FAE5"/>
+      <text x="207" y="20" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700">Reminders Scheduled:</text>
+      <text x="207" y="36" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="800">60d, 30d, 15d, 7d, 1d</text>
+
+      <rect x="0" y="58" width="380" height="48" rx="10" fill="#FFFFFF" stroke="#D1FAE5"/>
+      <text x="12" y="78" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700">Timeline Milestone Added:</text>
+      <text x="12" y="94" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Appears on Life Timeline under 15 Dec 2026</text>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- FLOW 2: MULTI-STAGE URGENT RESOLUTION FLOW              -->
+  <!-- ======================================================== -->
+  <g id="Flow_2_Urgent_Renewal">
+    <rect x="980" y="120" width="880" height="420" rx="24" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <rect x="1000" y="140" width="220" height="26" rx="13" fill="#FEF2F2" stroke="#FEE2E2"/>
+    <text x="1110" y="157" text-anchor="middle" fill="#991B1B" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">FLOW 02: URGENT RENEWAL TRIAGE</text>
+
+    <!-- Notification Trigger -->
+    <rect x="1000" y="190" width="170" height="80" rx="16" fill="#FEF2F2" stroke="#FECACA"/>
+    <text x="1016" y="218" fill="#991B1B" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">1. 7-Day Push Alert</text>
+    <text x="1016" y="236" fill="#7F1D1D" font-family="Plus Jakarta Sans, sans-serif" font-size="10">"🚗 Vehicle insurance expires</text>
+    <text x="1016" y="250" fill="#7F1D1D" font-family="Plus Jakarta Sans, sans-serif" font-size="10">in 7 days. Renew now."</text>
+
+    <!-- Arrow 1 -> 2 -->
+    <path d="M1170 230h40" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/>
+    <polygon points="1210,230 1202,226 1202,234" fill="#DC2626"/>
+    <text x="1190" y="222" text-anchor="middle" fill="#DC2626" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">OPEN</text>
+
+    <!-- Step 2: Dashboard Attention Card -->
+    <rect x="1220" y="190" width="180" height="80" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="1236" y="218" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">2. Needs Attention Card</text>
+    <text x="1236" y="236" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Promoted to top of Dashboard</text>
+    <text x="1236" y="250" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Shows: [Renew] &amp; [Remind]</text>
+
+    <!-- Arrow 2 -> 3 (Branching) -->
+    <path d="M1400 230h40" stroke="#4B5563" stroke-width="2" stroke-linecap="round"/>
+    <polygon points="1440,230 1432,226 1432,234" fill="#4B5563"/>
+    <text x="1420" y="222" text-anchor="middle" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">DECIDE</text>
+
+    <!-- Decision Box -->
+    <rect x="1450" y="190" width="160" height="80" rx="16" fill="#FAF9F6" stroke="#CBD5E1"/>
+    <text x="1466" y="218" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">3. Resolution Choice</text>
+    <text x="1466" y="236" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Action A: Renew instantly</text>
+    <text x="1466" y="250" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Action B: Snooze / Set alert</text>
+
+    <!-- Branch A: Renew -->
+    <path d="M1610 215h60" stroke="#059669" stroke-width="2"/>
+    <polygon points="1670,215 1662,211 1662,219" fill="#059669"/>
+    <text x="1635" y="207" text-anchor="middle" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">RENEW</text>
+
+    <rect x="1680" y="190" width="160" height="50" rx="12" fill="#ECFDF5" stroke="#A7F3D0"/>
+    <text x="1694" y="212" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">One-Tap Portal</text>
+    <text x="1694" y="228" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Deep-link to Insurer</text>
+
+    <!-- Branch B: Snooze -->
+    <path d="M1530 270v40h140" stroke="#D97706" stroke-width="2"/>
+    <polygon points="1670,310 1662,306 1662,314" fill="#D97706"/>
+    <text x="1590" y="302" fill="#B45309" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">SNOOZE / ADAPTIVE</text>
+
+    <rect x="1680" y="285" width="160" height="50" rx="12" fill="#FFFBEB" stroke="#FEF3C7"/>
+    <text x="1694" y="307" fill="#92400E" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">Smart Reschedule</text>
+    <text x="1694" y="323" fill="#B45309" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Alerts: 3d &amp; 1d prior</text>
+
+    <!-- Step 4: Resolution Outcome -->
+    <rect x="1000" y="360" width="840" height="140" rx="16" fill="#F8FAFC" stroke="#E2E8F0"/>
+    <text x="1020" y="390" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="800">4. Status Transformation in System</text>
+    
+    <g transform="translate(1020, 405)">
+      <rect x="0" y="0" width="250" height="70" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text x="14" y="24" fill="#991B1B" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">Before: Urgent (7d left)</text>
+      <text x="14" y="42" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">🔴 Metric Counter: 2 Expired, 5 Soon</text>
+      <text x="14" y="58" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Badge: 87% Compliant</text>
+
+      <text x="270" y="40" font-size="18" fill="#2563EB">➔</text>
+
+      <rect x="290" y="0" width="250" height="70" rx="12" fill="#ECFDF5" stroke="#A7F3D0"/>
+      <text x="304" y="24" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">After: Policy Renewed</text>
+      <text x="304" y="42" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="10">🟢 Metric Counter: 0 Expired, 21 Active</text>
+      <text x="304" y="58" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Badge: 96% Compliant (+9% Gain)</text>
+
+      <rect x="560" y="0" width="240" height="70" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text x="574" y="24" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">Digital Glovebox Update</text>
+      <text x="574" y="42" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Old policy archived in history</text>
+      <text x="574" y="58" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">New policy PDF tagged for 2027</text>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- FLOW 3: LIFE TIMELINE & CHRONOLOGY DISCOVERY FLOW        -->
+  <!-- ======================================================== -->
+  <g id="Flow_3_Timeline">
+    <rect x="60" y="570" width="880" height="450" rx="24" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <rect x="80" y="590" width="220" height="26" rx="13" fill="#F5F3FF" stroke="#EDE9FE"/>
+    <text x="190" y="607" text-anchor="middle" fill="#5B21B6" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">FLOW 03: LIFE TIMELINE OPERATING SYSTEM</text>
+
+    <!-- Steps -->
+    <rect x="80" y="640" width="240" height="100" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="96" y="668" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">1. Unified Chronological Feed</text>
+    <text x="96" y="688" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Merges 4 discrete streams:</text>
+    <text x="96" y="704" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="10">⏰ Deadlines • 🛠️ Services</text>
+    <text x="96" y="720" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="10">💳 Payments • 🧾 Warranties</text>
+
+    <!-- Arrow -->
+    <path d="M320 690h50" stroke="#8B5CF6" stroke-width="2"/>
+    <polygon points="370,690 362,686 362,694" fill="#8B5CF6"/>
+    <text x="345" y="682" text-anchor="middle" fill="#8B5CF6" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">FILTER</text>
+
+    <rect x="380" y="640" width="240" height="100" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="396" y="668" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">2. Segmented Pill Filter</text>
+    <text x="396" y="688" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">User toggles category focus:</text>
+    <text x="396" y="704" fill="#1E40AF" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Filter: "Payments" ➔ Reveals only</text>
+    <text x="396" y="720" fill="#1E40AF" font-family="Plus Jakarta Sans, sans-serif" font-size="10">HDFC EMI (₹18.5k), Rent (₹22k)</text>
+
+    <!-- Arrow -->
+    <path d="M620 690h50" stroke="#8B5CF6" stroke-width="2"/>
+    <polygon points="670,690 662,686 662,694" fill="#8B5CF6"/>
+    <text x="645" y="682" text-anchor="middle" fill="#8B5CF6" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">INSPECT</text>
+
+    <rect x="680" y="640" width="230" height="100" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="696" y="668" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">3. Deep Milestone View</text>
+    <text x="696" y="688" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Tapping any milestone reveals:</text>
+    <text x="696" y="704" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Linked Asset + Technician contact</text>
+    <text x="696" y="720" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="10">+ Invoice + 1-Tap Log Completion</text>
+
+    <!-- Timeline Architecture Mapping Box -->
+    <rect x="80" y="760" width="830" height="230" rx="16" fill="#FDFBF7" stroke="#E5E7EB"/>
+    <text x="100" y="790" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="800">Timeline Node Schema (Visual State Engine)</text>
+    
+    <g transform="translate(100, 808)">
+      <circle cx="20" cy="20" r="12" fill="#FEE2E2" stroke="#EF4444" stroke-width="2"/>
+      <text x="44" y="16" fill="#991B1B" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">Critical Expiry Node</text>
+      <text x="44" y="32" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Trigger: Expiration date &lt; 7 days. Escalates to urgent alert.</text>
+
+      <circle cx="20" cy="70" r="12" fill="#EFF6FF" stroke="#3B82F6" stroke-width="2"/>
+      <text x="44" y="66" fill="#1E40AF" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">Financial Payment Node</text>
+      <text x="44" y="82" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Trigger: Recurring EMI, rent, or subscription renewal date.</text>
+
+      <circle cx="20" cy="120" r="12" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+      <text x="44" y="116" fill="#5B21B6" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">Periodic Maintenance Node</text>
+      <text x="44" y="132" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Trigger: Odometer interval (25,000 km) or seasonal service date.</text>
+
+      <circle cx="20" cy="170" r="12" fill="#ECFDF5" stroke="#10B981" stroke-width="2"/>
+      <text x="44" y="166" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">Asset Maturity Node</text>
+      <text x="44" y="182" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Trigger: Fixed Deposit, RD, or Policy maturity with credit reminder.</text>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- FLOW 4: FAMILY VAULT & COLLABORATIVE NUDGE FLOW          -->
+  <!-- ======================================================== -->
+  <g id="Flow_4_Family">
+    <rect x="980" y="570" width="880" height="450" rx="24" fill="#FFFFFF" stroke="#E5E7EB"/>
+    <rect x="1000" y="590" width="220" height="26" rx="13" fill="#ECFDF5" stroke="#D1FAE5"/>
+    <text x="1110" y="607" text-anchor="middle" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">FLOW 04: FAMILY VAULT COLLABORATION</text>
+
+    <!-- Family Step 1 -->
+    <rect x="1000" y="640" width="240" height="100" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="1016" y="668" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">1. Household Health Check</text>
+    <text x="1016" y="688" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Household Score: 87%</text>
+    <text x="1016" y="704" fill="#991B1B" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Flag: Dad's Driving Licence expired</text>
+    <text x="1016" y="720" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Requires immediate attention</text>
+
+    <!-- Arrow -->
+    <path d="M1240 690h50" stroke="#059669" stroke-width="2"/>
+    <polygon points="1290,690 1282,686 1282,694" fill="#059669"/>
+    <text x="1265" y="682" text-anchor="middle" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">NUDGE</text>
+
+    <!-- Family Step 2 -->
+    <rect x="1300" y="640" width="240" height="100" rx="16" fill="#ECFDF5" stroke="#A7F3D0"/>
+    <text x="1316" y="668" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">2. One-Tap WhatsApp Nudge</text>
+    <text x="1316" y="688" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Pre-fills WhatsApp template:</text>
+    <text x="1316" y="704" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="10">"Hi Dad, your Driving Licence expired</text>
+    <text x="1316" y="720" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="10">4 days ago. Here is the Sarathi link."</text>
+
+    <!-- Arrow -->
+    <path d="M1540 690h50" stroke="#059669" stroke-width="2"/>
+    <polygon points="1590,690 1582,686 1582,694" fill="#059669"/>
+    <text x="1565" y="682" text-anchor="middle" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700">SYNC</text>
+
+    <!-- Family Step 3 -->
+    <rect x="1600" y="640" width="240" height="100" rx="16" fill="#FAF9F6" stroke="#E5E7EB"/>
+    <text x="1616" y="668" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700">3. Household Sync</text>
+    <text x="1616" y="688" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Dad renews licence online.</text>
+    <text x="1616" y="704" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Uploads new DL smart card.</text>
+    <text x="1616" y="720" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Household score jumps to 96%!</text>
+
+    <!-- 4-Tier Database Architecture Mapping Box -->
+    <rect x="1000" y="760" width="840" height="230" rx="16" fill="#FDFBF7" stroke="#E5E7EB"/>
+    <text x="1020" y="790" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="800">4-Tier Relational Flow Model (Database Mapping)</text>
+    
+    <g transform="translate(1020, 810)">
+      <rect x="0" y="0" width="180" height="70" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text x="14" y="24" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">1. PERSON</text>
+      <text x="14" y="42" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Aswin / Dad / Mom</text>
+      <text x="14" y="58" fill="#9CA3AF" font-family="Plus Jakarta Sans, sans-serif" font-size="9">UUID, Auth, Permissions</text>
+
+      <text x="195" y="40" font-size="18" fill="#9CA3AF">➔</text>
+
+      <rect x="215" y="0" width="180" height="70" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text x="229" y="24" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">2. ASSET</text>
+      <text x="229" y="42" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Activa 6G / ExpertBook</text>
+      <text x="229" y="58" fill="#9CA3AF" font-family="Plus Jakarta Sans, sans-serif" font-size="9">Serial, Odometer, QR ID</text>
+
+      <text x="410" y="40" font-size="18" fill="#9CA3AF">➔</text>
+
+      <rect x="430" y="0" width="180" height="70" rx="12" fill="#FFFFFF" stroke="#E5E7EB"/>
+      <text x="444" y="24" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">3. DOCUMENT</text>
+      <text x="444" y="42" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="10">Insurance Policy PDF</text>
+      <text x="444" y="58" fill="#9CA3AF" font-family="Plus Jakarta Sans, sans-serif" font-size="9">Policy #, Insurer, File URL</text>
+
+      <text x="625" y="40" font-size="18" fill="#9CA3AF">➔</text>
+
+      <rect x="645" y="0" width="180" height="70" rx="12" fill="#ECFDF5" stroke="#A7F3D0"/>
+      <text x="659" y="24" fill="#065F46" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">4. DEADLINE</text>
+      <text x="659" y="42" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="10">15 Dec 2026</text>
+      <text x="659" y="58" fill="#047857" font-family="Plus Jakarta Sans, sans-serif" font-size="9">Reminders: 90d..1d</text>
+    </g>
+  </g>
+</svg>

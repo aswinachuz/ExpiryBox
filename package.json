@@ -1,0 +1,28 @@
+{
+  "name": "expirybox",
+  "version": "1.0.0",
+  "description": "ExpiryBox — Personal & Family Vault Expiry Tracker (Offline-First PWA & Unified MERN Stack)",
+  "main": "server/server.js",
+  "scripts": {
+    "install:server": "npm --prefix server install",
+    "install:client": "npm --prefix client install",
+    "install:all": "npm run install:server && npm run install:client",
+    "build": "npm --prefix client run build",
+    "start": "node server/server.js",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "seed": "npm --prefix server run seed"
+  },
+  "keywords": [
+    "pwa",
+    "expiry-tracker",
+    "family-vault",
+    "mern",
+    "offline-first"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Aswin",
+  "license": "MIT"
+}

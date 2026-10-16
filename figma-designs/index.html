@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExpiryBox — Human-Crafted Light Design System & Interactive UX Flows</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Malayalam:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .lang-ml * {
+      font-family: 'Noto Sans Malayalam', 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    .figma-light-grid {
+      background-color: #ECEFF1;
+      background-image: radial-gradient(#CFD8DC 1.2px, transparent 1.2px);
+      background-size: 20px 20px;
+    }
+
+    .mobile-frame-light {
+      width: 380px;
+      height: 780px;
+      background: #FFFFFF;
+      border: 6px solid #1E293B;
+      border-radius: 46px;
+      box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+    .mobile-frame-light:hover {
+      box-shadow: 0 25px 60px -12px rgba(59, 130, 246, 0.2), 0 0 0 2px #3B82F6;
+    }
+
+    .dynamic-island {
+      width: 110px;
+      height: 26px;
+      background: #000000;
+      border-radius: 20px;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+    .island-lens {
+      width: 8px;
+      height: 8px;
+      background: #111827;
+      border: 1px solid #1F2937;
+      border-radius: 50%;
+    }
+
+    .status-bar-light {
+      height: 44px;
+      padding: 12px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #111827;
+      z-index: 40;
+    }
+
+    .screen-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 12px 18px 85px;
+      background: #FAF9F6;
+    }
+
+    .bottom-bar-light {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid #E5E7EB;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 10px 10px;
+      z-index: 45;
+    }
+
+    @keyframes gentleScan {
+      0% { top: 15%; opacity: 0.5; }
+      50% { top: 75%; opacity: 0.9; }
+      100% { top: 15%; opacity: 0.5; }
+    }
+    .gentle-scan-line {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      height: 2px;
+      background: #3B82F6;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+      animation: gentleScan 3s infinite ease-in-out;
+    }
+
+    /* Clickable interactive pulse indicator */
+    .clickable-target {
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .clickable-target:hover {
+      transform: translateY(-1px);
+    }
+    .clickable-target:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body class="bg-[#F1F3F5] text-slate-800 min-h-screen flex flex-col">
+
+  <!-- ================= TOP TOOLBAR ================= -->
+  <header class="h-14 bg-white border-b border-gray-200 px-6 flex items-center justify-between sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-sm">
+        E
+      </div>
+      <div>
+        <div class="flex items-center space-x-2">
+          <span class="font-bold text-sm text-gray-900 tracking-tight">ExpiryBox Studio</span>
+          <span class="bg-gray-100 text-gray-600 text-[11px] font-semibold px-2 py-0.5 rounded-full border border-gray-200">Light Human Palette</span>
+        </div>
+        <p class="text-[11px] text-gray-500">End-to-End User Flows &amp; Prototype</p>
+      </div>
+    </div>
+
+    <!-- Center Mode Switcher -->
+    <div class="flex items-center bg-gray-100 p-1 rounded-xl border border-gray-200">
+      <button onclick="setTab('flows')" id="btn-tab-flows" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-gray-900 shadow-sm transition flex items-center space-x-1.5">
+        <svg class="w-3.5 h-3.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><circle cx="6" cy="18" r="3"/></svg>
+        <span>⚡ UX User Flows &amp; Wireflows</span>
+      </button>
+      <button onclick="setTab('sim')" id="btn-tab-sim" class="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 hover:text-gray-900 transition flex items-center space-x-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        <span>📱 Clickable Prototype</span>
+      </button>
+      <button onclick="setTab('canvas')" id="btn-tab-canvas" class="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 hover:text-gray-900 transition flex items-center space-x-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        <span>🖼️ Artboards Canvas</span>
+      </button>
+      <button onclick="setTab('arch')" id="btn-tab-arch" class="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 hover:text-gray-900 transition flex items-center space-x-1.5">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="16" y="2" width="6" height="6" rx="1"/><rect x="9" y="16" width="6" height="6" rx="1"/></svg>
+        <span>4-Tier Architecture</span>
+      </button>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center space-x-3">
+      <div class="flex items-center bg-gray-100 rounded-lg border border-gray-200 p-0.5 text-xs">
+        <button onclick="changeLanguage('en')" id="l-en" class="px-2 py-1 rounded bg-white text-gray-900 font-bold shadow-xs">EN</button>
+        <button onclick="changeLanguage('ml')" id="l-ml" class="px-2 py-1 rounded text-gray-500 hover:text-gray-900">മലയാളം</button>
+        <button onclick="changeLanguage('hi')" id="l-hi" class="px-2 py-1 rounded text-gray-500 hover:text-gray-900">हिन्दी</button>
+      </div>
+
+      <a href="svg/09_user_flows_wireflow.svg" download class="px-3 py-1.5 bg-gray-900 hover:bg-black text-white text-xs font-semibold rounded-lg shadow-sm flex items-center space-x-1.5 transition">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Export Flow SVG</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Interactive Hint Bar -->
+  <div class="bg-blue-50 border-b border-blue-200 px-6 py-2 flex items-center justify-between text-xs text-blue-900">
+    <div class="flex items-center space-x-2">
+      <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+      <span class="font-semibold">Interactive Prototype Active:</span>
+      <span class="text-blue-800">Tap cards, categories, or the bottom nav bar on the phone to test natural transitions between screens!</span>
+    </div>
+    <div class="flex items-center space-x-4 text-blue-700">
+      <span>Auto-Layout: Enabled</span>
+      <span>•</span>
+      <span>Screen-to-Screen Triggers Active</span>
+    </div>
+  </div>
+
+  <!-- Main View Workspace -->
+  <main class="flex-1 overflow-auto p-6">
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 1: USER FLOWS & WIREFLOW DIAGRAMS                                     -->
+    <!-- ========================================================================= -->
+    <div id="tab-flows-view" class="max-w-6xl mx-auto space-y-6">
+      
+      <!-- Flow Overview Header -->
+      <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex items-center justify-between">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded-full">UX Architecture</span>
+            <h2 class="text-xl font-extrabold text-gray-900">Core Screen-to-Screen User Flows</h2>
+          </div>
+          <p class="text-xs text-gray-500">How users navigate from discovery, scanning, triage, to family nudges and resolution.</p>
+        </div>
+        <button onclick="setTab('sim')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-sm transition flex items-center space-x-1.5">
+          <span>Run Clickable Prototype</span>
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <!-- 4 Flow Journey Cards -->
+      <div class="grid grid-cols-2 gap-6">
+
+        <!-- Flow 1: Smart OCR Scan & Link -->
+        <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-full">Flow 01: Capture &amp; Link</span>
+            <span class="text-xs text-gray-400 font-medium">3 Steps • Automated</span>
+          </div>
+          <h3 class="text-sm font-bold text-gray-900">Document Scan ➔ OCR Detection ➔ Asset Link</h3>
+          
+          <!-- Wireflow Step Nodes -->
+          <div class="space-y-2.5 text-xs">
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">1</span>
+              <div>
+                <span class="font-bold text-gray-900 block">Tap Floating Scan (+) Button</span>
+                <span class="text-gray-500 text-[11px]">User taps center camera action from any screen bottom nav bar.</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-blue-600 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">AI Camera sweeps</span></div>
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">2</span>
+              <div>
+                <span class="font-bold text-gray-900 block">OCR Auto-Extracts Expiry &amp; Numbers</span>
+                <span class="text-gray-500 text-[11px]">Identifies 15/12/2026 expiry, UIIC policy, and KL-07-CB-9921 vehicle.</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-blue-600 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">Privacy Shield enabled</span></div>
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">3</span>
+              <div>
+                <span class="font-bold text-emerald-900 block">Linked to Vehicle Garage &amp; Reminders Set</span>
+                <span class="text-emerald-700 text-[11px]">Reminders automatically populated at 60d, 30d, 15d, 7d, 1d intervals!</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow 2: Urgent Expiry Triage -->
+        <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-rose-800 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full">Flow 02: Urgent Triage</span>
+            <span class="text-xs text-gray-400 font-medium">Penalty Prevention</span>
+          </div>
+          <h3 class="text-sm font-bold text-gray-900">Push Alert ➔ Dashboard Action ➔ Instant Renewal</h3>
+          
+          <div class="space-y-2.5 text-xs">
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">1</span>
+              <div>
+                <span class="font-bold text-gray-900 block">7-Day Urgent Push Alert</span>
+                <span class="text-gray-500 text-[11px]">"🚗 Activa Insurance expires in 7 days. Avoid ₹2,000 fine."</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-rose-600 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">Opens Dashboard</span></div>
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">2</span>
+              <div>
+                <span class="font-bold text-gray-900 block">Promoted "Needs Attention" Card</span>
+                <span class="text-gray-500 text-[11px]">Shows urgent countdown with direct [Renew] &amp; [Remind] actions.</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-rose-600 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">1-Tap Portal</span></div>
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">3</span>
+              <div>
+                <span class="font-bold text-emerald-900 block">Policy Renewed ➔ Expiry Score +9% Gain</span>
+                <span class="text-emerald-700 text-[11px]">Card turns green (Active &gt;30d) and new policy saved to Glovebox.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow 3: Life Timeline Operating System -->
+        <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-purple-800 bg-purple-50 border border-purple-200 px-2.5 py-1 rounded-full">Flow 03: Life Timeline</span>
+            <span class="text-xs text-gray-400 font-medium">Hero Innovation</span>
+          </div>
+          <h3 class="text-sm font-bold text-gray-900">Unified Life Milestones ➔ Category Filter ➔ Log Action</h3>
+          
+          <div class="space-y-2.5 text-xs">
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">1</span>
+              <div>
+                <span class="font-bold text-gray-900 block">Open Life Timeline</span>
+                <span class="text-gray-500 text-[11px]">Chronological feed of AC service, Credit card bills, Bike insurance, FD.</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-purple-600 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">Toggles "Services"</span></div>
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">2</span>
+              <div>
+                <span class="font-bold text-gray-900 block">Milestone Details &amp; Contacts</span>
+                <span class="text-gray-500 text-[11px]">Direct phone call to technician Manoj (+91 98471...) &amp; warranty info.</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-purple-600 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">Service Complete</span></div>
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">3</span>
+              <div>
+                <span class="font-bold text-emerald-900 block">Logged &amp; Next Cycle Scheduled</span>
+                <span class="text-emerald-700 text-[11px]">Service bill attached; next AC service automatically set for 6 months later.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Flow 4: Family Vault & WhatsApp Nudge -->
+        <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">Flow 04: Family Vault</span>
+            <span class="text-xs text-gray-400 font-medium">Household Differentiator</span>
+          </div>
+          <h3 class="text-sm font-bold text-gray-900">Household Score ➔ Identify Risk ➔ WhatsApp Nudge</h3>
+          
+          <div class="space-y-2.5 text-xs">
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">1</span>
+              <div>
+                <span class="font-bold text-gray-900 block">Check Family Vault (87% Score)</span>
+                <span class="text-gray-500 text-[11px]">Dad's Driving Licence flagged as expired 4 days ago.</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-emerald-700 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">1-Tap Action</span></div>
+            <div class="bg-[#FAF9F6] p-3 rounded-xl border border-gray-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">2</span>
+              <div>
+                <span class="font-bold text-gray-900 block">Pre-filled WhatsApp Reminder</span>
+                <span class="text-gray-500 text-[11px]">Dispatches friendly reminder with direct Sarathi renewal portal link.</span>
+              </div>
+            </div>
+            <div class="flex justify-center text-emerald-700 font-bold">↓ <span class="text-[10px] text-gray-400 font-normal ml-1">Dad renews</span></div>
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 flex items-start space-x-3">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">3</span>
+              <div>
+                <span class="font-bold text-emerald-900 block">Household Compliant (96%)</span>
+                <span class="text-emerald-700 text-[11px]">Updated DL valid till 2038 synced to Dad's profile.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Full Visual Vector Embed -->
+      <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-sm font-bold text-gray-900">Vector User Flow Architecture Diagram</h3>
+          <span class="text-xs text-gray-500">Vector SVG • 1920 × 1080 px</span>
+        </div>
+        <div class="border border-gray-200 rounded-2xl overflow-hidden bg-[#FAF9F6] p-2">
+          <img src="svg/09_user_flows_wireflow.svg" alt="ExpiryBox UX User Flows" class="w-full h-auto rounded-xl">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 2: INTERACTIVE PHONE SIMULATOR (Fully Clickable Prototype)            -->
+    <!-- ========================================================================= -->
+    <div id="tab-sim-view" class="hidden flex justify-center items-start py-4">
+      
+      <!-- Left Screen Directory -->
+      <div class="w-72 mr-8 bg-white p-5 rounded-3xl border border-gray-200 shadow-sm space-y-4">
+        <div>
+          <h3 class="font-bold text-xs uppercase tracking-wider text-gray-500">Screen Navigator</h3>
+          <p class="text-xs text-gray-600 mt-1">Click below or tap directly on the phone interface.</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <button onclick="navTo('dashboard')" id="nav-btn-dashboard" class="w-full text-left px-3 py-2 rounded-xl text-xs font-bold bg-gray-900 text-white flex items-center space-x-2 transition">
+            <span>📱</span><span>01. Dashboard (Home)</span>
+          </button>
+          <button onclick="navTo('timeline')" id="nav-btn-timeline" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition">
+            <span>🔥</span><span>02. Life Timeline</span>
+          </button>
+          <button onclick="navTo('ocr')" id="nav-btn-ocr" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition">
+            <span>📷</span><span>03. Document Scanner</span>
+          </button>
+          <button onclick="navTo('garage')" id="nav-btn-garage" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition">
+            <span>🚗</span><span>04. Vehicle Garage</span>
+          </button>
+          <button onclick="navTo('family')" id="nav-btn-family" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition">
+            <span>👨‍👩‍👧</span><span>05. Family Vault</span>
+          </button>
+        </div>
+
+        <!-- Simulation Triggers -->
+        <div class="pt-3 border-t border-gray-100 space-y-2">
+          <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Trigger Flow Alerts</span>
+          <button onclick="showToast('🚗 7-Day Urgent Alert: Activa Insurance expires soon!', 'rose')" class="w-full py-1.5 px-2 bg-rose-50 text-rose-800 border border-rose-200 rounded-lg text-[10px] font-bold text-left transition">
+            🚨 Trigger 7-Day Urgent Alert
+          </button>
+          <button onclick="showToast('💬 WhatsApp reminder sent to Dad with Sarathi renewal link!', 'emerald')" class="w-full py-1.5 px-2 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg text-[10px] font-bold text-left transition">
+            👨‍👩‍👧 Simulate WhatsApp Nudge
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Phone Mockup -->
+      <div class="mobile-frame-light" id="active-phone-frame">
+        <div class="dynamic-island"><div class="island-lens"></div></div>
+        <div class="status-bar-light"><span>09:41</span><span>5G 100%</span></div>
+        
+        <!-- Screen Container Content -->
+        <div class="screen-scroll" id="phone-screen-content">
+          <!-- Dynamically Injected Interactive Screens -->
+        </div>
+
+        <!-- Universal Interactive Bottom Nav -->
+        <div class="bottom-bar-light">
+          <button onclick="navTo('dashboard')" id="bnav-dashboard" class="flex flex-col items-center text-gray-900 font-bold clickable-target">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="text-[10px] mt-0.5">Home</span>
+          </button>
+          <button onclick="navTo('timeline')" id="bnav-timeline" class="flex flex-col items-center text-gray-400 hover:text-gray-900 clickable-target">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span class="text-[10px] font-medium mt-0.5">Timeline</span>
+          </button>
+          <!-- Center Scan Button -->
+          <div class="-mt-6">
+            <button onclick="navTo('ocr')" class="w-12 h-12 rounded-full bg-gray-900 text-white flex items-center justify-center shadow-md ring-4 ring-white clickable-target hover:bg-black transition">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7V4a2 2 0 0 1 2-2h3"/><path d="M20 7V4a2 2 0 0 0-2-2h-3"/><path d="M4 17v3a2 2 0 0 0 2 2h3"/><path d="M20 17v3a2 2 0 0 1-2 2h-3"/></svg>
+            </button>
+          </div>
+          <button onclick="navTo('family')" id="bnav-family" class="flex flex-col items-center text-gray-400 hover:text-gray-900 clickable-target">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            <span class="text-[10px] font-medium mt-0.5">Family</span>
+          </button>
+          <button onclick="showToast('⚙️ Settings & Security PIN Vault loaded.', 'blue')" class="flex flex-col items-center text-gray-400 hover:text-gray-900 clickable-target">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span class="text-[10px] font-medium mt-0.5">Settings</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 3: FIGMA ARTBOARDS CANVAS (Side-by-side Light Frames)                -->
+    <!-- ========================================================================= -->
+    <div id="tab-canvas-view" class="hidden figma-light-grid p-6 rounded-3xl border border-gray-300 shadow-inner">
+      <div class="flex justify-between items-center mb-6 bg-white/80 backdrop-blur p-4 rounded-2xl border border-gray-200">
+        <div>
+          <h2 class="text-sm font-bold text-gray-900">Side-by-Side Artboards Canvas</h2>
+          <p class="text-xs text-gray-500">All screens rendered with warm light paper palettes and calm status badges.</p>
+        </div>
+        <div class="flex items-center space-x-2 text-xs">
+          <span class="bg-rose-50 text-rose-800 border border-rose-200 px-2 py-0.5 rounded font-medium">🔴 Expired (&lt;7d)</span>
+          <span class="bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded font-medium">🟡 Soon (8-30d)</span>
+          <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded font-medium">🟢 Active</span>
+        </div>
+      </div>
+
+      <div class="flex space-x-8 overflow-x-auto pb-8 items-start">
+        <div class="flex flex-col items-center flex-shrink-0">
+          <span class="text-xs font-bold text-gray-500 mb-2">#01 Dashboard</span>
+          <img src="svg/01_dashboard.svg" width="375" class="rounded-3xl border border-gray-300 shadow-sm">
+        </div>
+        <div class="flex flex-col items-center flex-shrink-0">
+          <span class="text-xs font-bold text-gray-500 mb-2">#02 Life Timeline</span>
+          <img src="svg/02_life_timeline.svg" width="375" class="rounded-3xl border border-gray-300 shadow-sm">
+        </div>
+        <div class="flex flex-col items-center flex-shrink-0">
+          <span class="text-xs font-bold text-gray-500 mb-2">#03 Document Scanner</span>
+          <img src="svg/03_smart_ocr_scanner.svg" width="375" class="rounded-3xl border border-gray-300 shadow-sm">
+        </div>
+        <div class="flex flex-col items-center flex-shrink-0">
+          <span class="text-xs font-bold text-gray-500 mb-2">#04 Vehicle Garage</span>
+          <img src="svg/04_vehicle_garage.svg" width="375" class="rounded-3xl border border-gray-300 shadow-sm">
+        </div>
+        <div class="flex flex-col items-center flex-shrink-0">
+          <span class="text-xs font-bold text-gray-500 mb-2">#05 Family Vault</span>
+          <img src="svg/05_family_vault.svg" width="375" class="rounded-3xl border border-gray-300 shadow-sm">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 4: 4-TIER ARCHITECTURE SPECIFICATION                                 -->
+    <!-- ========================================================================= -->
+    <div id="tab-arch-view" class="hidden max-w-4xl mx-auto space-y-6">
+      <div class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm">
+        <h2 class="text-lg font-bold text-gray-900 mb-1">4-Tier Relational Structure</h2>
+        <p class="text-xs text-gray-500 mb-6">PERSON ➔ ASSET ➔ DOCUMENT ➔ DEADLINE</p>
+        <div class="flex items-center space-x-3">
+          <div class="flex-1 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-center">
+            <span class="text-xl block mb-1">👤</span>
+            <div class="text-xs font-bold text-gray-900">1. Person</div>
+            <div class="text-[11px] text-gray-600">Aswin / Dad / Mom</div>
+          </div>
+          <span class="text-gray-400 font-bold">➔</span>
+          <div class="flex-1 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-center">
+            <span class="text-xl block mb-1">🛵</span>
+            <div class="text-xs font-bold text-gray-900">2. Asset</div>
+            <div class="text-[11px] text-gray-600">Honda Activa 6G</div>
+          </div>
+          <span class="text-gray-400 font-bold">➔</span>
+          <div class="flex-1 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-center">
+            <span class="text-xl block mb-1">📄</span>
+            <div class="text-xs font-bold text-gray-900">3. Document</div>
+            <div class="text-[11px] text-gray-600">Insurance Policy</div>
+          </div>
+          <span class="text-gray-400 font-bold">➔</span>
+          <div class="flex-1 bg-gray-50 p-4 rounded-2xl border border-gray-200 text-center">
+            <span class="text-xl block mb-1">⏰</span>
+            <div class="text-xs font-bold text-gray-900">4. Deadline</div>
+            <div class="text-[11px] text-gray-600">15 Dec 2026 (7d, 1d)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Interactive Toast Notification -->
+  <div id="sim-toast" class="hidden fixed bottom-6 right-6 bg-white border border-gray-200 text-gray-900 px-4 py-3 rounded-2xl shadow-xl z-50 flex items-center space-x-3 transition">
+    <div id="toast-icon" class="w-8 h-8 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-sm">🔔</div>
+    <div>
+      <div id="toast-title" class="text-[11px] font-bold text-gray-500 uppercase">Action Triggered</div>
+      <div id="toast-msg" class="text-xs font-semibold text-gray-900">Notification message</div>
+    </div>
+  </div>
+
+  <!-- Interactive State Engine -->
+  <script>
+    let currentTab = 'flows';
+    let currentScreen = 'dashboard';
+    let currentLang = 'en';
+
+    const screens = {
+      dashboard: `
+        <!-- Profile Greeting -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shadow-xs">A</div>
+            <div>
+              <span class="text-xs text-gray-500" id="txt-greeting">Good Evening,</span>
+              <h3 class="font-bold text-sm text-gray-900">Aswin 👋</h3>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 shadow-xs">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <button onclick="showToast('🔔 2 urgent reminders requiring your attention today!', 'rose')" class="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 shadow-xs relative clickable-target">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/></svg>
+              <span class="w-2 h-2 rounded-full bg-rose-500 absolute top-1 right-1"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 27 Things Tracked Card -->
+        <div class="bg-white border border-gray-200 rounded-2xl p-4 mb-4 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-gray-500">Total Things Tracked</span>
+              <div class="text-3xl font-extrabold text-gray-900 tracking-tight mt-0.5">27</div>
+            </div>
+            <span class="text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">87% Compliant</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 pt-2 border-t border-gray-100">
+            <div class="bg-rose-50 border border-rose-100 rounded-xl p-2 text-center clickable-target" onclick="showToast('🔴 2 Items Expired: Dad Driving Licence &amp; Tyres', 'rose')">
+              <div class="text-rose-800 font-extrabold text-base">2</div>
+              <div class="text-[10px] font-semibold text-rose-700">Expired</div>
+            </div>
+            <div class="bg-amber-50 border border-amber-100 rounded-xl p-2 text-center clickable-target" onclick="showToast('🟡 5 Items Soon: Activa Insurance, Asus Warranty, AC Service...', 'amber')">
+              <div class="text-amber-800 font-extrabold text-base">5</div>
+              <div class="text-[10px] font-semibold text-amber-700">Soon</div>
+            </div>
+            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-2 text-center clickable-target" onclick="showToast('🟢 20 Active &amp; Safe documents compliant!', 'emerald')">
+              <div class="text-emerald-800 font-extrabold text-base">20</div>
+              <div class="text-[10px] font-semibold text-emerald-700">Active</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Attention Needed Header -->
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-gray-700 flex items-center space-x-1.5">
+            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+            <span>Needs Attention</span>
+          </h4>
+          <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="navTo('timeline')">View All (7) →</span>
+        </div>
+
+        <!-- Urgent Card 1: Vehicle Insurance (Tap to open Garage!) -->
+        <div class="bg-white border border-rose-200 rounded-2xl p-3.5 mb-2.5 shadow-xs clickable-target">
+          <div class="flex items-start justify-between" onclick="navTo('garage')">
+            <div class="flex space-x-2.5">
+              <div class="w-9 h-9 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-base">🚗</div>
+              <div>
+                <h5 class="text-xs font-bold text-gray-900">Vehicle Insurance</h5>
+                <p class="text-[11px] text-gray-500">Honda Activa 6G • KL-07-CB-9921</p>
+              </div>
+            </div>
+            <span class="bg-rose-50 text-rose-800 border border-rose-200 text-[10px] font-bold px-2 py-0.5 rounded-full">7 days left</span>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-gray-100 flex space-x-2">
+            <button onclick="showToast('🚀 Redirecting to United India Insurance renewal portal...', 'emerald')" class="flex-1 bg-gray-900 hover:bg-black text-white text-[11px] font-bold py-1.5 rounded-xl transition shadow-xs">Renew Policy</button>
+            <button onclick="showToast('⏰ Reminder snoozed. We will alert you 3 days prior.', 'blue')" class="px-3 bg-gray-50 text-gray-700 text-[11px] font-semibold rounded-xl border border-gray-200">Set Reminder</button>
+          </div>
+        </div>
+
+        <!-- Urgent Card 2: Laptop Warranty -->
+        <div class="bg-white border border-amber-200 rounded-2xl p-3.5 mb-4 shadow-xs">
+          <div class="flex items-start justify-between">
+            <div class="flex space-x-2.5">
+              <div class="w-9 h-9 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-base">💻</div>
+              <div>
+                <h5 class="text-xs font-bold text-gray-900">ASUS ExpertBook P3</h5>
+                <p class="text-[11px] text-gray-500">Hardware Standard Warranty</p>
+              </div>
+            </div>
+            <span class="bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold px-2 py-0.5 rounded-full">28 days</span>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-gray-100 flex space-x-2">
+            <button onclick="showToast('📄 Opening Amazon Tax Invoice PDF...', 'blue')" class="flex-1 bg-gray-50 text-gray-700 text-[11px] font-semibold py-1.5 rounded-xl border border-gray-200">View Invoice</button>
+            <button onclick="showToast('🛡️ ASUS Warranty Extension options loaded.', 'blue')" class="px-3 bg-blue-50 text-blue-700 text-[11px] font-semibold rounded-xl border border-blue-200">Extend</button>
+          </div>
+        </div>
+
+        <!-- Categories Grid -->
+        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Vault Categories</h4>
+        <div class="grid grid-cols-3 gap-2">
+          <div class="bg-white border border-gray-200 p-2.5 rounded-xl text-center shadow-xs clickable-target" onclick="showToast('📄 9 Personal documents loaded.', 'blue')">
+            <div class="text-lg mb-0.5">📄</div><div class="text-[11px] font-bold text-gray-900">Docs</div><div class="text-[10px] text-gray-400">9 items</div>
+          </div>
+          <div class="bg-white border border-gray-200 p-2.5 rounded-xl text-center shadow-xs clickable-target" onclick="navTo('garage')">
+            <div class="text-lg mb-0.5">🚗</div><div class="text-[11px] font-bold text-gray-900">Garage</div><div class="text-[10px] text-gray-400">2 vehicles</div>
+          </div>
+          <div class="bg-white border border-gray-200 p-2.5 rounded-xl text-center shadow-xs clickable-target" onclick="showToast('🏠 Home Vault: Flat 402, AC, Inverter, Purifier', 'blue')">
+            <div class="text-lg mb-0.5">🏠</div><div class="text-[11px] font-bold text-gray-900">Home</div><div class="text-[10px] text-gray-400">6 assets</div>
+          </div>
+          <div class="bg-white border border-gray-200 p-2.5 rounded-xl text-center shadow-xs clickable-target" onclick="showToast('💳 Subscriptions: Netflix ₹649, Google One ₹1,300', 'blue')">
+            <div class="text-lg mb-0.5">💳</div><div class="text-[11px] font-bold text-gray-900">Subs</div><div class="text-[10px] text-gray-400">4 active</div>
+          </div>
+          <div class="bg-white border border-gray-200 p-2.5 rounded-xl text-center shadow-xs clickable-target" onclick="showToast('🧾 Warranties: Laptop, Phone, Refrigerator', 'blue')">
+            <div class="text-lg mb-0.5">🧾</div><div class="text-[11px] font-bold text-gray-900">Warranty</div><div class="text-[10px] text-gray-400">3 covered</div>
+          </div>
+          <div class="bg-white border border-gray-200 p-2.5 rounded-xl text-center shadow-xs clickable-target" onclick="showToast('🏦 SBI FD matures 05 Nov 2026 (₹2,14,000)', 'emerald')">
+            <div class="text-lg mb-0.5">🏦</div><div class="text-[11px] font-bold text-gray-900">FD / Invest</div><div class="text-[10px] text-gray-400">3 accounts</div>
+          </div>
+        </div>
+      `,
+
+      timeline: `
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h3 class="font-bold text-base text-gray-900">Life Timeline</h3>
+            <p class="text-[11px] text-gray-500">Personal Deadline Operating System</p>
+          </div>
+          <button onclick="navTo('dashboard')" class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">← Back</button>
+        </div>
+
+        <div class="flex space-x-1.5 overflow-x-auto pb-2 mb-3">
+          <button class="px-2.5 py-1 bg-gray-900 text-white text-[11px] font-bold rounded-full">All (14)</button>
+          <button class="px-2.5 py-1 bg-white text-gray-700 text-[11px] font-medium rounded-full border border-gray-200">Deadlines</button>
+          <button class="px-2.5 py-1 bg-white text-gray-700 text-[11px] font-medium rounded-full border border-gray-200">Services</button>
+          <button class="px-2.5 py-1 bg-white text-gray-700 text-[11px] font-medium rounded-full border border-gray-200">Payments</button>
+        </div>
+
+        <div class="mb-4">
+          <span class="text-xs font-extrabold uppercase tracking-widest text-gray-900 block mb-2">October 2026</span>
+          <div class="space-y-2.5">
+            <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-xs clickable-target" onclick="showToast('🛠️ Manoj (Technician): +91 98471... ready to call.', 'purple')">
+              <div class="flex justify-between items-start">
+                <span class="text-[11px] font-bold text-purple-900">7 Oct • 2 days left</span>
+                <span class="text-[10px] bg-purple-50 text-purple-700 px-2 py-0.5 rounded font-semibold border border-purple-100">Service</span>
+              </div>
+              <div class="text-xs font-bold text-gray-900 mt-1">🛠️ LG Dual Inverter AC Periodic Service</div>
+              <p class="text-[11px] text-gray-500 mt-0.5">Living room unit • Technician: Manoj (+91 98471...)</p>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-xs clickable-target" onclick="showToast('💳 HDFC Auto-debit scheduled from Salaried A/c.', 'blue')">
+              <div class="flex justify-between items-start">
+                <span class="text-[11px] font-bold text-blue-900">15 Oct • ₹18,450 Due</span>
+                <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-semibold border border-blue-100">Payment</span>
+              </div>
+              <div class="text-xs font-bold text-gray-900 mt-1">💳 HDFC Regalia Credit Card Bill</div>
+              <p class="text-[11px] text-gray-500 mt-0.5">Auto-debit scheduled from Salaried A/c</p>
+            </div>
+
+            <div class="bg-white border border-rose-200 rounded-xl p-3 shadow-xs clickable-target" onclick="navTo('garage')">
+              <div class="flex justify-between items-start">
+                <span class="text-[11px] font-bold text-rose-800">21 Oct • 6 days left (Penalty Risk)</span>
+                <span class="text-[10px] bg-rose-50 text-rose-700 px-2 py-0.5 rounded font-semibold border border-rose-100">Urgent</span>
+              </div>
+              <div class="text-xs font-bold text-gray-900 mt-1">🚗 Honda Activa 6G Insurance Expiry</div>
+              <p class="text-[11px] text-gray-500 mt-0.5">United India Policy • Avoid ₹2,000 fine</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <span class="text-xs font-extrabold uppercase tracking-widest text-gray-900 block mb-2">November 2026</span>
+          <div class="space-y-2.5">
+            <div class="bg-white border border-gray-200 rounded-xl p-3 shadow-xs clickable-target" onclick="showToast('🏦 ₹2,14,000 SBI FD Maturity scheduled for credit.', 'emerald')">
+              <div class="flex justify-between items-start">
+                <span class="text-[11px] font-bold text-emerald-900">05 Nov • ₹2,14,000 Maturity</span>
+                <span class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-semibold border border-emerald-100">FD Credit</span>
+              </div>
+              <div class="text-xs font-bold text-gray-900 mt-1">🏦 SBI Fixed Deposit Maturity</div>
+              <p class="text-[11px] text-gray-500 mt-0.5">Principal + Interest credit to Savings A/c</p>
+            </div>
+          </div>
+        </div>
+      `,
+
+      ocr: `
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="font-bold text-sm text-gray-900">Document Scanner</h3>
+          <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">AI Camera Ready</span>
+        </div>
+
+        <!-- Clean Camera Viewfinder -->
+        <div class="relative my-2 w-full h-60 bg-slate-100 rounded-3xl border-2 border-dashed border-gray-300 p-4 flex flex-col justify-between overflow-hidden shadow-inner">
+          <div class="gentle-scan-line"></div>
+          <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-gray-600"></div>
+          <div class="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-gray-600"></div>
+          <div class="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-gray-600"></div>
+          <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-gray-600"></div>
+
+          <div class="space-y-2 opacity-50 bg-white p-3 rounded-xl border border-gray-200">
+            <div class="h-3 bg-gray-300 w-28 rounded"></div>
+            <div class="h-2 bg-gray-200 w-44 rounded"></div>
+            <div class="h-10 bg-gray-50 rounded border border-gray-200 p-2 mt-2">
+              <span class="text-[9px] text-gray-700 font-bold block">EXPIRY DATE DETECTED</span>
+              <span class="text-xs font-mono font-extrabold text-blue-700">15/12/2026 (99.4%)</span>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <span class="bg-white text-gray-700 text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-xs border border-gray-200">
+              Align document edges in frame
+            </span>
+          </div>
+        </div>
+
+        <!-- Extracted Card -->
+        <div class="bg-white border border-gray-200 rounded-2xl p-3.5 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-gray-900 flex items-center space-x-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span>Insurance Detected</span></span>
+            <span class="text-[10px] font-bold text-blue-800 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">Vehicle Insurance</span>
+          </div>
+
+          <div class="space-y-1 text-[11px] bg-gray-50 p-2 rounded-xl border border-gray-100 mb-2.5">
+            <div class="flex justify-between"><span class="text-gray-500">Policy No:</span><span class="font-mono text-gray-900 font-semibold">UIIC-2024-8849201</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Vehicle No:</span><span class="font-mono text-gray-900 font-bold">KL-07-CB-9921</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Expiry Date:</span><span class="font-bold text-amber-700">15 Dec 2026 (61 days)</span></div>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] text-gray-600 mb-3 px-1">
+            <span>Store only expiry date &amp; policy #</span>
+            <input type="checkbox" checked class="w-4 h-4 accent-gray-900 rounded">
+          </div>
+
+          <!-- Flow Action Trigger: Jump to Garage! -->
+          <button onclick="navTo('garage'); showToast('✅ Document successfully linked to Honda Activa Garage!', 'emerald');" class="w-full bg-gray-900 hover:bg-black text-white font-bold text-xs py-2.5 rounded-xl transition shadow-xs clickable-target">
+            Confirm &amp; Link to Vehicle Garage ➔
+          </button>
+        </div>
+      `,
+
+      garage: `
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">🛵</span>
+            <div>
+              <h3 class="font-bold text-sm text-gray-900">Honda Activa 6G</h3>
+              <div class="flex items-center space-x-2 text-[11px] text-gray-500">
+                <span class="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-gray-800 font-bold border border-gray-200">KL-07-CB-9921</span>
+                <span>• 24,500 km</span>
+              </div>
+            </div>
+          </div>
+          <button onclick="navTo('dashboard')" class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">← Home</button>
+        </div>
+
+        <div class="space-y-2 mb-3">
+          <div class="bg-white border border-amber-200 rounded-xl p-3 shadow-xs">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs font-bold text-gray-900">🛡️ Comprehensive Insurance</span>
+              <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">🟡 61 days left</span>
+            </div>
+            <div class="flex justify-between text-[11px] text-gray-500">
+              <span>United India • Exp: 15 Dec 2026</span>
+              <span class="text-blue-600 font-semibold cursor-pointer" onclick="showToast('🚀 Redirecting to United India Insurance renewal portal...', 'emerald')">Renew</span>
+            </div>
+          </div>
+
+          <div class="bg-white border border-emerald-200 rounded-xl p-3 shadow-xs">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs font-bold text-gray-900">🌿 Pollution (PUC)</span>
+              <span class="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">🟢 120 days</span>
+            </div>
+            <div class="flex justify-between text-[11px] text-gray-500">
+              <span>Valid till 14 Feb 2027</span>
+              <span class="text-blue-600 font-semibold cursor-pointer" onclick="showToast('🌿 PUC Certificate Test Score: 0.12 (Passed)', 'emerald')">Certificate</span>
+            </div>
+          </div>
+
+          <div class="bg-white border border-amber-200 rounded-xl p-3 shadow-xs">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs font-bold text-gray-900">🔧 Periodic Service</span>
+              <span class="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">🟡 18 days</span>
+            </div>
+            <div class="flex justify-between text-[11px] text-gray-500">
+              <span>Due at 25,000 km</span>
+              <span class="text-blue-600 font-semibold cursor-pointer" onclick="showToast('🔧 Service logged for Honda Service Centre, Kochi.', 'blue')">Log Service</span>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Digital Glovebox</h4>
+        <div class="grid grid-cols-2 gap-2">
+          <div class="bg-white p-2.5 rounded-xl border border-gray-200 shadow-xs flex items-center space-x-2 clickable-target" onclick="showToast('📄 Opening RC_Card.pdf (Smart Card copy)', 'blue')">
+            <span class="text-rose-700 font-bold text-xs bg-rose-50 border border-rose-100 px-1.5 py-0.5 rounded">PDF</span>
+            <div class="overflow-hidden">
+              <div class="text-[11px] font-semibold text-gray-900 truncate">RC_Card.pdf</div>
+              <div class="text-[9px] text-gray-400">1.2 MB</div>
+            </div>
+          </div>
+          <div class="bg-white p-2.5 rounded-xl border border-gray-200 shadow-xs flex items-center space-x-2 clickable-target" onclick="showToast('🖼️ Opening PUC_Cert.jpg', 'blue')">
+            <span class="text-blue-700 font-bold text-xs bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded">JPG</span>
+            <div class="overflow-hidden">
+              <div class="text-[11px] font-semibold text-gray-900 truncate">PUC_Cert.jpg</div>
+              <div class="text-[9px] text-gray-400">840 KB</div>
+            </div>
+          </div>
+        </div>
+      `,
+
+      family: `
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h3 class="font-bold text-base text-gray-900">Family Vault</h3>
+            <p class="text-[11px] text-gray-500">The Aswin Household (4 Members)</p>
+          </div>
+          <button onclick="navTo('dashboard')" class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">← Home</button>
+        </div>
+
+        <!-- Household Health Score Card -->
+        <div class="bg-white border border-gray-200 rounded-2xl p-4 mb-4 shadow-sm text-center">
+          <div class="text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-1">Household Expiry Score</div>
+          <div class="text-4xl font-extrabold text-emerald-800 mb-1">87%</div>
+          <p class="text-[11px] text-gray-600">1 member has an expired document requiring urgent action</p>
+          <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden mt-3">
+            <div class="bg-emerald-600 h-full rounded-full" style="width: 87%"></div>
+          </div>
+        </div>
+
+        <!-- Dad Alert & Nudge Flow Trigger -->
+        <div class="bg-white border border-rose-200 rounded-2xl p-3.5 mb-3 shadow-xs">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-9 h-9 rounded-full bg-amber-50 text-amber-800 flex items-center justify-center font-bold text-sm">👨</div>
+              <div>
+                <h4 class="text-xs font-bold text-gray-900">Dad (Ramesh)</h4>
+                <span class="text-[10px] text-gray-400">Head of Household</span>
+              </div>
+            </div>
+            <!-- Clickable Nudge -->
+            <button onclick="showToast('💬 WhatsApp reminder sent to Dad: Hi Dad, your DL expired 4 days ago. Here is the Sarathi renewal link!', 'emerald')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2.5 py-1 rounded-lg transition clickable-target">
+              WhatsApp Nudge
+            </button>
+          </div>
+          <div class="space-y-1 text-[11px] bg-rose-50 p-2 rounded-lg border border-rose-100">
+            <div class="flex justify-between items-center text-rose-800 font-bold">
+              <span>🔴 Driving Licence</span>
+              <span class="text-[10px] bg-rose-100 px-1.5 py-0.5 rounded">Expired 4 days ago</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-gray-200 rounded-2xl p-3 mb-2.5 shadow-xs">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-full bg-purple-50 text-purple-800 flex items-center justify-center font-bold text-xs">👩</div>
+              <div>
+                <h4 class="text-xs font-bold text-gray-900">Mom (Sujatha)</h4>
+                <span class="text-[10px] text-gray-400">Health Insurance in 52 days</span>
+              </div>
+            </div>
+            <span class="text-[10px] bg-amber-50 text-amber-800 px-2 py-0.5 rounded-full font-bold">🟡 Soon</span>
+          </div>
+        </div>
+
+        <div class="bg-white border border-gray-200 rounded-2xl p-3 shadow-xs">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-full bg-blue-50 text-blue-800 flex items-center justify-center font-bold text-xs">👦</div>
+              <div>
+                <h4 class="text-xs font-bold text-gray-900">Aswin (Me)</h4>
+                <span class="text-[10px] text-emerald-800 font-semibold">🟢 All 9 documents compliant</span>
+              </div>
+            </div>
+            <span class="text-xs">✅</span>
+          </div>
+        </div>
+      `
+    };
+
+    function setTab(tab) {
+      currentTab = tab;
+      ['flows', 'sim', 'canvas', 'arch'].forEach(t => {
+        document.getElementById(`tab-${t}-view`).classList.add('hidden');
+        const b = document.getElementById(`btn-tab-${t}`);
+        if (b) {
+          b.className = (t === tab) 
+            ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-gray-900 shadow-sm transition flex items-center space-x-1.5'
+            : 'px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 hover:text-gray-900 transition flex items-center space-x-1.5';
+        }
+      });
+      document.getElementById(`tab-${tab}-view`).classList.remove('hidden');
+      if (tab === 'sim') navTo(currentScreen);
+    }
+
+    function navTo(screenId) {
+      currentScreen = screenId;
+      const target = document.getElementById('phone-screen-content');
+      if (target && screens[screenId]) {
+        target.innerHTML = screens[screenId];
+      }
+
+      // Update Screen Navigator Buttons
+      ['dashboard', 'timeline', 'ocr', 'garage', 'family'].forEach(s => {
+        const b = document.getElementById(`nav-btn-${s}`);
+        if (b) {
+          b.className = (s === screenId)
+            ? 'w-full text-left px-3 py-2 rounded-xl text-xs font-bold bg-gray-900 text-white flex items-center space-x-2 transition'
+            : 'w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-gray-700 hover:bg-gray-100 flex items-center space-x-2 transition';
+        }
+      });
+
+      // Update Bottom Bar Active Color
+      ['dashboard', 'timeline', 'family'].forEach(s => {
+        const b = document.getElementById(`bnav-${s}`);
+        if (b) {
+          b.className = (s === screenId)
+            ? 'flex flex-col items-center text-gray-900 font-bold clickable-target'
+            : 'flex flex-col items-center text-gray-400 hover:text-gray-900 clickable-target';
+        }
+      });
+    }
+
+    function showToast(msg, tone = 'blue') {
+      const toast = document.getElementById('sim-toast');
+      const icon = document.getElementById('toast-icon');
+      document.getElementById('toast-msg').innerText = msg;
+
+      if (tone === 'rose') {
+        icon.className = 'w-8 h-8 rounded-full bg-rose-50 text-rose-700 flex items-center justify-center font-bold text-sm';
+        icon.innerText = '🚨';
+      } else if (tone === 'emerald') {
+        icon.className = 'w-8 h-8 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-sm';
+        icon.innerText = '✓';
+      } else {
+        icon.className = 'w-8 h-8 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-sm';
+        icon.innerText = '🔔';
+      }
+
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 4000);
+    }
+
+    function changeLanguage(lang) {
+      ['en', 'ml', 'hi'].forEach(l => {
+        const b = document.getElementById(`l-${l}`);
+        b.className = (l === lang) ? 'px-2 py-1 rounded bg-white text-gray-900 font-bold shadow-xs' : 'px-2 py-1 rounded text-gray-500 hover:text-gray-900';
+      });
+      document.body.classList.toggle('lang-ml', lang === 'ml');
+      const g = { en: "Good Evening,", ml: "ശുഭ സായാഹ്നം,", hi: "शुभ संध्या," };
+      const el = document.getElementById('txt-greeting');
+      if (el) el.innerText = g[lang];
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      navTo('dashboard');
+    });
+  </script>
+</body>
+</html>

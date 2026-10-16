@@ -1,0 +1,84 @@
+<svg width="393" height="852" viewBox="0 0 393 852" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Artboard Floor (Calm Slate Studio Background) -->
+  <rect width="393" height="852" rx="44" fill="#F1F3F5"/>
+  <rect x="2.5" y="2.5" width="388" height="847" rx="41.5" stroke="#E5E7EB" stroke-width="5"/>
+
+  <!-- Dynamic Island -->
+  <rect x="142" y="12" width="109" height="26" rx="13" fill="#111827"/>
+  <text x="34" y="30" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="13" font-weight="700">09:41</text>
+  <text x="348" y="30" fill="#2563EB" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">SCAN</text>
+
+  <!-- Clean Document Camera Viewfinder (Non-neon, Human design) -->
+  <g id="Viewfinder">
+    <rect x="24" y="80" width="345" height="390" rx="28" fill="#E2E8F0" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="8 6"/>
+
+    <!-- Subtle Blue Alignment Corners -->
+    <path d="M40 106v-14h14" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+    <path d="M353 106v-14h-14" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+    <path d="M40 444v14h14" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+    <path d="M353 444v14h-14" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Gentle Scanning Indicator -->
+    <line x1="36" y1="260" x2="357" y2="260" stroke="#2563EB" stroke-width="2"/>
+
+    <!-- Realistic Paper Policy Document -->
+    <rect x="52" y="116" width="289" height="318" rx="12" fill="#FFFFFF" stroke="#CBD5E1"/>
+    
+    <!-- Paper Letterhead -->
+    <rect x="72" y="138" width="120" height="12" rx="3" fill="#64748B"/>
+    <rect x="72" y="158" width="249" height="6" rx="3" fill="#E2E8F0"/>
+    <rect x="72" y="170" width="200" height="6" rx="3" fill="#E2E8F0"/>
+    <rect x="72" y="182" width="230" height="6" rx="3" fill="#E2E8F0"/>
+    
+    <!-- Detected Data Highlight on Paper -->
+    <rect x="68" y="224" width="257" height="62" rx="10" fill="#EFF6FF" stroke="#BFDBFE"/>
+    <text x="82" y="244" fill="#1E40AF" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700">EXPIRY DATE DETECTED</text>
+    <text x="82" y="268" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="800">15 / 12 / 2026</text>
+    <text x="82" y="280" fill="#059669" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="600">✓ Confidence: 99.4%</text>
+
+    <!-- Helper Pill -->
+    <rect x="110" y="440" width="173" height="24" rx="12" fill="#FFFFFF" stroke="#E2E8F0"/>
+    <text x="196" y="456" text-anchor="middle" fill="#4B5563" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600">Align document edges in frame</text>
+  </g>
+
+  <!-- Clean White Extracted Bottom Sheet -->
+  <g id="Extracted_Sheet">
+    <rect x="0" y="490" width="393" height="362" rx="32" fill="#FFFFFF" stroke="#E5E7EB"/>
+    
+    <!-- Sheet Drag Handle -->
+    <rect x="176" y="502" width="40" height="4" rx="2" fill="#D1D5DB"/>
+
+    <text x="24" y="536" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="800">Document Detected</text>
+    <rect x="259" y="522" width="110" height="22" rx="11" fill="#EFF6FF" stroke="#BFDBFE"/>
+    <text x="314" y="537" text-anchor="middle" fill="#1E40AF" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="700">Vehicle Insurance</text>
+
+    <!-- Key-Value Metadata Card -->
+    <rect x="20" y="556" width="353" height="124" rx="14" fill="#F9FAFB" stroke="#E5E7EB"/>
+    
+    <text x="36" y="582" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Policy Number:</text>
+    <text x="357" y="582" text-anchor="end" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700">UIIC-2024-8849201</text>
+
+    <text x="36" y="608" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Vehicle Number:</text>
+    <text x="357" y="608" text-anchor="end" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="800">KL-07-CB-9921</text>
+
+    <text x="36" y="634" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Detected Expiry:</text>
+    <text x="357" y="634" text-anchor="end" fill="#B45309" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="800">15 Dec 2026 (61 days)</text>
+
+    <text x="36" y="660" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Insurance Provider:</text>
+    <text x="357" y="660" text-anchor="end" fill="#111827" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600">United India Insurance Ltd</text>
+
+    <!-- Privacy Shield Setting -->
+    <rect x="20" y="692" width="353" height="38" rx="10" fill="#F3F4F6"/>
+    <text x="56" y="716" fill="#374151" font-family="Plus Jakarta Sans, sans-serif" font-size="11">Store only expiry date &amp; policy # (Privacy Shield)</text>
+    <circle cx="38" cy="711" r="5" fill="#059669"/>
+    <!-- Switch -->
+    <rect x="330" y="702" width="32" height="18" rx="9" fill="#111827"/>
+    <circle cx="351" cy="711" r="7" fill="#FFFFFF"/>
+
+    <!-- Action Buttons -->
+    <rect x="20" y="744" width="353" height="48" rx="14" fill="#111827"/>
+    <text x="196" y="774" text-anchor="middle" fill="#FFFFFF" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700">Confirm &amp; Link to Vehicle Garage</text>
+
+    <text x="196" y="814" text-anchor="middle" fill="#6B7280" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600">Retake Photo</text>
+  </g>
+</svg>

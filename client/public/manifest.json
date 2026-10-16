@@ -1,0 +1,57 @@
+{
+  "name": "ExpiryBox — Personal Deadline & Renewal OS",
+  "short_name": "ExpiryBox",
+  "description": "One place to manage everything in your life that has a deadline, renewal, warranty, payment, or important document.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
+  "background_color": "#FAF9F6",
+  "theme_color": "#111827",
+  "orientation": "any",
+  "categories": ["productivity", "utilities", "finance", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "96x96 128x128 192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Tracked Item",
+      "short_name": "Add Item",
+      "description": "Register a new document, warranty, or renewal",
+      "url": "/?action=add",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Family Vault",
+      "short_name": "Family",
+      "description": "Inspect family members and records",
+      "url": "/?action=family",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Life Timeline",
+      "short_name": "Timeline",
+      "description": "Chronological stream of upcoming deadlines",
+      "url": "/?action=timeline",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": []
+}
