@@ -1,13 +1,24 @@
 import axios from 'axios';
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+const isNativeApp = typeof window !== 'undefined' && (
+  window.Capacitor?.isNativePlatform?.() ||
+  window.location?.protocol === 'capacitor:' ||
+  window.location?.protocol === 'ionic:' ||
+  (window.location?.hostname === 'localhost' && Boolean(window.Capacitor))
+);
+
+export const API_BASE_URL = import.meta.env.VITE_API_URL || (
+  isNativeApp
+    ? 'https://expirybox-three.vercel.app/api'
+    : (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api')
+);
 
 export const getAttachmentUrl = (filePath) => {
   if (!filePath) return '';
   if (filePath.startsWith('http://') || filePath.startsWith('https://')) return filePath;
   const baseUrl = import.meta.env.VITE_API_URL 
     ? import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '') 
-    : (import.meta.env.PROD ? '' : 'http://localhost:5000');
+    : (isNativeApp ? 'https://expirybox-three.vercel.app' : (import.meta.env.PROD ? '' : 'http://localhost:5000'));
   return `${baseUrl}${filePath.startsWith('/') ? filePath : `/${filePath}`}`;
 };
 

@@ -24,24 +24,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
-          cache-dependency-path: 'client/package-lock.json'
 
-      - name: Install Client Dependencies
+      - name: Install Dependencies
         run: |
-          cd client
-          npm ci || npm install
+          npm install
 
       - name: Build Web Application
         run: |
-          cd client
-          npm run build
+          node scripts/build.js
 
       - name: Sync Capacitor Android Project
         run: |
-          cd client
-          npx cap sync android
+          npm run cap:sync --workspace=client
 
       - name: Make Gradle Wrapper Executable
         run: chmod +x client/android/gradlew
