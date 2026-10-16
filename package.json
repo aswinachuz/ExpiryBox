@@ -1,6 +1,6 @@
 {
   "name": "expirybox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ExpiryBox — Personal & Family Vault Expiry Tracker (Offline-First PWA & Unified MERN Stack)",
   "main": "server/server.js",
   "scripts": {
