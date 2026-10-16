@@ -57,7 +57,8 @@ const connectDB = async () => {
 
 // Ensure DB connected on API requests in serverless environments
 app.use(async (req, res, next) => {
-  if (req.path.startsWith('/api') && mongoose.connection.readyState !== 1) {
+  // Ensure DB connected on API requests in serverless environments
+  if (mongoose.connection.readyState !== 1) {
     try {
       await connectDB();
     } catch (err) {
@@ -67,22 +68,31 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// Health check
-app.get('/api/health', (req, res) => {
+// Health check (supports /api/health and /health under serverless rewrites)
+const healthHandler = (req, res) => {
   res.json({
     status: 'online',
     app: 'ExpiryBox API',
-    version: '1.0.0',
+    version: '1.0.1',
     timestamp: new Date().toISOString(),
     mongoConnected: mongoose.connection.readyState === 1,
   });
-});
+};
+app.get('/api/health', healthHandler);
+app.get('/health', healthHandler);
 
-// Mount Routes
+// Mount Routes (supporting both /api/xxx and /xxx for Vercel rewrites)
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+
 app.use('/api/items', itemRoutes);
+app.use('/items', itemRoutes);
+
 app.use('/api/persons', personRoutes);
+app.use('/persons', personRoutes);
+
 app.use('/api/assets', assetRoutes);
+app.use('/assets', assetRoutes);
 
 // Serve client build if available (Unified production hosting like Render/VPS/Docker)
 const clientDistPath = path.join(__dirname, '../client/dist');
