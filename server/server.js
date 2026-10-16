@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 let rawMongoUri = process.env.MONGO_URI || (process.env.VERCEL ? null : 'mongodb://127.0.0.1:27017/ExpiryBox');
 // Auto-match exact Atlas case [ExpiryBox] to prevent case-collision errors
-const MONGO_URI = rawMongoUri ? rawMongoUri.replace(/\/expirybox(\?|$)/i, '/ExpiryBox$1') : null;
+const MONGO_URI = rawMongoUri ? rawMongoUri.replace(/\/expirybox(?=[/?]|$)/gi, '/ExpiryBox') : null;
 
 // Middleware
 app.use(cors());
@@ -53,6 +53,7 @@ const connectDB = async () => {
   try {
     const conn = await mongoose.connect(MONGO_URI, {
       serverSelectionTimeoutMS: 5000,
+      dbName: 'ExpiryBox',
     });
     isConnected = true;
     console.log(' Connected to MongoDB');

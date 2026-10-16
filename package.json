@@ -8,7 +8,7 @@
     "server"
   ],
   "scripts": {
-    "build": "npm run build --workspace=client",
+    "build": "node scripts/build.js",
     "start": "node server/server.js",
     "dev:server": "npm run dev --workspace=server",
     "dev:client": "npm run dev --workspace=client",

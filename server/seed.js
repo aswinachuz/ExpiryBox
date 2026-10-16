@@ -3,12 +3,12 @@ const Person = require('./models/Person');
 const Asset = require('./models/Asset');
 const Item = require('./models/Item');
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/expirybox';
+const MONGO_URI = (process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/ExpiryBox').replace(/\/expirybox(?=[/?]|$)/gi, '/ExpiryBox');
 
 async function seedDatabase() {
   try {
     console.log('Connecting to MongoDB:', MONGO_URI);
-    await mongoose.connect(MONGO_URI);
+    await mongoose.connect(MONGO_URI, { dbName: 'ExpiryBox' });
     console.log('Connected! Clearing existing collections...');
 
     await Person.deleteMany({});
