@@ -125,7 +125,7 @@ app.use((err, req, res, next) => {
 const { initNotificationCron } = require('./services/notificationService');
 
 // If executed directly as entrypoint (not when imported as a serverless module), start server
-if (require.main === module && !process.env.VERCEL) {
+if (require.main === module) {
   connectDB()
     .then(() => {
       try {
@@ -133,13 +133,13 @@ if (require.main === module && !process.env.VERCEL) {
       } catch (e) {
         console.warn('Cron init warning:', e.message);
       }
-      app.listen(PORT, () => {
-        console.log(`🚀 ExpiryBox Server listening on http://localhost:${PORT}`);
+      app.listen(PORT, '0.0.0.0', () => {
+        console.log(`🚀 ExpiryBox Server listening on http://0.0.0.0:${PORT}`);
       });
     })
     .catch(() => {
-      app.listen(PORT, () => {
-        console.log(`⚠️ ExpiryBox Server listening on http://localhost:${PORT} (without active MongoDB)`);
+      app.listen(PORT, '0.0.0.0', () => {
+        console.log(`⚠️ ExpiryBox Server listening on http://0.0.0.0:${PORT} (without active MongoDB)`);
       });
     });
 }
