@@ -8,18 +8,36 @@ import AssetHubView from './views/AssetHubView';
 import { getStats, getItems, deleteItem, resolveItem, getMissedReminders, getMe, logoutUser } from './api';
 import { playReminderChime, playSuccessChime } from './utils/sound';
 
+// Safe lazy loading helper that reloads the page once if an old cached chunk 404s after redeployment
+const lazyWithRetry = (componentImport) =>
+  lazy(async () => {
+    const pageHasBeenRefreshed = window.sessionStorage.getItem('expirybox_chunk_refreshed');
+    try {
+      const component = await componentImport();
+      window.sessionStorage.removeItem('expirybox_chunk_refreshed');
+      return component;
+    } catch (error) {
+      if (!pageHasBeenRefreshed) {
+        window.sessionStorage.setItem('expirybox_chunk_refreshed', 'true');
+        window.location.reload();
+        return { default: () => null };
+      }
+      throw error;
+    }
+  });
+
 // Code-split modals for optimal initial page-load performance
-const AddItemModal = lazy(() => import('./components/AddItemModal'));
-const ItemDetailModal = lazy(() => import('./components/ItemDetailModal'));
-const RenewModal = lazy(() => import('./components/RenewModal'));
-const SnoozeModal = lazy(() => import('./components/SnoozeModal'));
-const MissedRemindersModal = lazy(() => import('./components/MissedRemindersModal'));
-const UniversalSearchModal = lazy(() => import('./components/UniversalSearchModal'));
-const PinLockModal = lazy(() => import('./components/PinLockModal'));
-const FamilyVaultModal = lazy(() => import('./components/FamilyVaultModal'));
-const BackupModal = lazy(() => import('./components/BackupModal'));
-const ReportsModal = lazy(() => import('./components/ReportsModal'));
-const AuthModal = lazy(() => import('./components/AuthModal'));
+const AddItemModal = lazyWithRetry(() => import('./components/AddItemModal'));
+const ItemDetailModal = lazyWithRetry(() => import('./components/ItemDetailModal'));
+const RenewModal = lazyWithRetry(() => import('./components/RenewModal'));
+const SnoozeModal = lazyWithRetry(() => import('./components/SnoozeModal'));
+const MissedRemindersModal = lazyWithRetry(() => import('./components/MissedRemindersModal'));
+const UniversalSearchModal = lazyWithRetry(() => import('./components/UniversalSearchModal'));
+const PinLockModal = lazyWithRetry(() => import('./components/PinLockModal'));
+const FamilyVaultModal = lazyWithRetry(() => import('./components/FamilyVaultModal'));
+const BackupModal = lazyWithRetry(() => import('./components/BackupModal'));
+const ReportsModal = lazyWithRetry(() => import('./components/ReportsModal'));
+const AuthModal = lazyWithRetry(() => import('./components/AuthModal'));
 
 export default function App() {
   const [currentView, setCurrentView] = useState('dashboard');

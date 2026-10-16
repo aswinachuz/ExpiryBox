@@ -11,6 +11,7 @@ const assetRoutes = require('./routes/assets');
 const authRoutes = require('./routes/auth');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 let rawMongoUri = process.env.MONGO_URI || (process.env.VERCEL ? null : 'mongodb://127.0.0.1:27017/ExpiryBox');
 // Auto-match exact Atlas case [ExpiryBox] to prevent case-collision errors
 const MONGO_URI = rawMongoUri ? rawMongoUri.replace(/\/expirybox(\?|$)/i, '/ExpiryBox$1') : null;
@@ -77,7 +78,7 @@ app.use(async (req, res, next) => {
   }
 
   // If request is targeting an API database route and Mongo is still not connected
-  const isApiRoute = req.path.startsWith('/api') || req.path.startsWith('/auth') || req.path.startsWith('/items') || req.path.startsWith('/persons') || req.path.startsWith('/assets');
+  const isApiRoute = req.path.startsWith('/api') || req.path.startsWith('/auth') || req.path.startsWith('/items') || req.path.startsWith('/persons');
   if (isApiRoute && mongoose.connection.readyState !== 1) {
     return res.status(503).json({
       success: false,
@@ -113,7 +114,6 @@ app.use('/api/persons', personRoutes);
 app.use('/persons', personRoutes);
 
 app.use('/api/assets', assetRoutes);
-app.use('/assets', assetRoutes);
 
 // Serve client build if available (Unified production hosting like Render/VPS/Docker/Vercel fallback)
 const clientDistPath = path.join(__dirname, '../client/dist');
@@ -122,8 +122,17 @@ if (fs.existsSync(clientDistPath)) {
   app.use(express.static(clientDistPath));
 
   app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api') || req.path.startsWith('/uploads') || req.path.startsWith('/auth') || req.path.startsWith('/items')) {
-      return next();
+    // If request was for an API route or a static asset (js, css, etc.) that wasn't found by express.static,
+    // do NOT return index.html because that causes "Failed to fetch dynamically imported module" syntax errors
+    if (
+      req.path.startsWith('/api') ||
+      req.path.startsWith('/uploads') ||
+      req.path.startsWith('/auth') ||
+      req.path.startsWith('/items') ||
+      req.path.startsWith('/assets') ||
+      /\.(js|css|map|png|jpg|jpeg|gif|svg|ico|json|woff2?|ttf)$/i.test(req.path)
+    ) {
+      return res.status(404).json({ success: false, message: 'Resource not found' });
     }
     res.sendFile(path.join(clientDistPath, 'index.html'));
   });
