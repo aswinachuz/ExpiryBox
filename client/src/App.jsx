@@ -29,6 +29,7 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [loading, setLoading] = useState(true);
   const [lang, setLang] = useState(localStorage.getItem('expirybox_lang') || 'en');
+  const [isLocked, setIsLocked] = useState(false);
 
   // Authentication State
   const [isAuthOpen, setIsAuthOpen] = useState(false);
