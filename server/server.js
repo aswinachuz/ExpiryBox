@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -18,9 +19,53 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve uploaded documents & photos
-const uploadsDir = path.join(__dirname, 'uploads');
+// Serve uploaded documents & photos (Safe for both Serverless /tmp and persistent disk)
+const uploadsDir = process.env.VERCEL
+  ? path.join('/tmp', 'uploads')
+  : path.join(__dirname, 'uploads');
+
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+} catch (e) {
+  // Read-only filesystem fallback
+}
 app.use('/uploads', express.static(uploadsDir));
+
+// Database connection logic for both Serverless & Long-running Node server
+let isConnected = false;
+const connectDB = async () => {
+  if (isConnected && mongoose.connection.readyState === 1) {
+    return mongoose.connection;
+  }
+  if (!process.env.MONGO_URI && process.env.VERCEL) {
+    console.warn('⚠️ MONGO_URI environment variable is missing on Vercel dashboard!');
+  }
+  try {
+    const conn = await mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 5000,
+    });
+    isConnected = true;
+    console.log(' Connected to MongoDB');
+    return conn;
+  } catch (err) {
+    console.error('❌ MongoDB Connection Error:', err.message);
+    throw err;
+  }
+};
+
+// Ensure DB connected on API requests in serverless environments
+app.use(async (req, res, next) => {
+  if (req.path.startsWith('/api') && mongoose.connection.readyState !== 1) {
+    try {
+      await connectDB();
+    } catch (err) {
+      // Continue so health check or fallback error responses can render
+    }
+  }
+  next();
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -39,10 +84,9 @@ app.use('/api/items', itemRoutes);
 app.use('/api/persons', personRoutes);
 app.use('/api/assets', assetRoutes);
 
-// Serve client build if available (Unified production hosting)
-const fs = require('fs');
+// Serve client build if available (Unified production hosting like Render/VPS/Docker)
 const clientDistPath = path.join(__dirname, '../client/dist');
-if (fs.existsSync(clientDistPath)) {
+if (fs.existsSync(clientDistPath) && !process.env.VERCEL) {
   console.log(`📦 Serving static client build from: ${clientDistPath}`);
   app.use(express.static(clientDistPath));
 
@@ -65,20 +109,24 @@ app.use((err, req, res, next) => {
 
 const { initNotificationCron } = require('./services/notificationService');
 
-// Connect to MongoDB and start server
-mongoose
-  .connect(MONGO_URI)
-  .then(() => {
-    console.log(' Connected to MongoDB at:', MONGO_URI);
-    initNotificationCron();
-    app.listen(PORT, () => {
-      console.log(`🚀 ExpiryBox Server listening on http://localhost:${PORT}`);
+// If executed directly as entrypoint (not when imported as a serverless module), start server
+if (require.main === module && !process.env.VERCEL) {
+  connectDB()
+    .then(() => {
+      try {
+        initNotificationCron();
+      } catch (e) {
+        console.warn('Cron init warning:', e.message);
+      }
+      app.listen(PORT, () => {
+        console.log(`🚀 ExpiryBox Server listening on http://localhost:${PORT}`);
+      });
+    })
+    .catch(() => {
+      app.listen(PORT, () => {
+        console.log(`⚠️ ExpiryBox Server listening on http://localhost:${PORT} (without active MongoDB)`);
+      });
     });
-  })
-  .catch((err) => {
-    console.error('❌ MongoDB Connection Error:', err.message);
-    // Still listen so frontend can report connection status
-    app.listen(PORT, () => {
-      console.log(`⚠️ ExpiryBox Server listening on http://localhost:${PORT} (without active MongoDB)`);
-    });
-  });
+}
+
+module.exports = app;

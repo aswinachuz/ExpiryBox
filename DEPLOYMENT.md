@@ -29,7 +29,30 @@ Because ExpiryBox is a compliant PWA with full app-manifest and service worker o
 
 ---
 
-## ☁️ 2. Free Cloud Publishing (Render + MongoDB Atlas)
+## ⚡ 2. Free Cloud Publishing on Vercel (Frontend + Serverless API)
+
+ExpiryBox is configured for direct 1-click deployment on Vercel:
+
+### Required Environment Variables on Vercel
+Go to **Vercel Dashboard → Your Project (`expiry-box`) → Settings → Environment Variables** and add:
+
+| Key | Example Value | Description |
+| :--- | :--- | :--- |
+| `MONGO_URI` | `mongodb+srv://admin:pass@cluster0.abcde.mongodb.net/expirybox?retryWrites=true&w=majority` | **Required**: MongoDB Atlas connection string |
+| `JWT_SECRET` | `expirybox_jwt_secret_key_prod_2026_super_secure` | **Required**: Secret token encryption key |
+| `NODE_ENV` | `production` | Recommended: Production runtime mode |
+| `EMAIL_USER` | `your-email@gmail.com` | Optional: Gmail for automated deadline alerts |
+| `EMAIL_PASS` | `abcd efgh ijkl mnop` | Optional: Gmail 16-char App Password |
+| `NOTIFICATION_DEFAULT_EMAIL` | `your-email@gmail.com` | Optional: Recipient for email alerts |
+
+### Step-by-Step Vercel Setup:
+1. Push code to GitHub (`git push origin main`).
+2. In Vercel, click **Redeploy** (under Deployments ▾ → Redeploy).
+3. The Vite frontend will be served at edge speed from `client/dist`, and all `/api/*` requests will be routed to the serverless Express backend via `api/index.js`!
+
+---
+
+## ☁️ 3. Free Cloud Publishing (Render + MongoDB Atlas)
 
 You can host ExpiryBox online with 100% free tiers:
 

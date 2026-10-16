@@ -7,12 +7,23 @@
     "install:server": "npm --prefix server install",
     "install:client": "npm --prefix client install",
     "install:all": "npm run install:server && npm run install:client",
-    "build": "npm --prefix client run build",
+    "build": "npm --prefix client install && npm --prefix client run build",
     "start": "node server/server.js",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
     "seed": "npm --prefix server run seed",
     "android:sync": "npm --prefix client run build && npm --prefix client run cap:sync"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.3.1",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^4.6.0",
+    "nodemailer": "^10.1.1"
   },
   "keywords": [
     "pwa",
