@@ -52,21 +52,25 @@ router.post('/register', async (req, res) => {
     await newUser.save();
 
     // Ensure a matching primary Person profile exists for household tracking
-    let person = await Person.findOne({ name: newUser.name });
-    if (!person) {
-      person = new Person({
-        name: newUser.name,
-        relation: 'Self',
-        avatar: '👦',
-        isPrimary: true,
-        email: newUser.email,
-        phone: newUser.phone,
-      });
-      await person.save();
-    } else {
-      if (newUser.phone) person.phone = newUser.phone;
-      if (newUser.email) person.email = newUser.email;
-      await person.save();
+    try {
+      let person = await Person.findOne({ email: newUser.email });
+      if (!person) {
+        person = new Person({
+          name: newUser.name,
+          relation: 'Self',
+          avatar: '👦',
+          isPrimary: true,
+          email: newUser.email,
+          phone: newUser.phone,
+        });
+        await person.save();
+      } else {
+        if (newUser.phone) person.phone = newUser.phone;
+        if (newUser.email) person.email = newUser.email;
+        await person.save();
+      }
+    } catch (personErr) {
+      console.warn('Household profile sync notice:', personErr.message);
     }
 
     const token = generateToken(newUser);
@@ -169,17 +173,21 @@ router.post('/google', async (req, res) => {
     }
 
     // Ensure matching Person profile exists
-    let person = await Person.findOne({ email: user.email });
-    if (!person) {
-      person = new Person({
-        name: user.name,
-        relation: 'Self',
-        avatar: user.avatar || '👦',
-        isPrimary: true,
-        email: user.email,
-        phone: user.phone,
-      });
-      await person.save();
+    try {
+      let person = await Person.findOne({ email: user.email });
+      if (!person) {
+        person = new Person({
+          name: user.name,
+          relation: 'Self',
+          avatar: user.avatar || '👦',
+          isPrimary: true,
+          email: user.email,
+          phone: user.phone,
+        });
+        await person.save();
+      }
+    } catch (personErr) {
+      console.warn('Google profile sync notice:', personErr.message);
     }
 
     const token = generateToken(user);
